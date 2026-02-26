@@ -1,0 +1,25 @@
+version: "2026.02"
+per_minute_usd: 0.008
+
+multipliers:
+  Linux: 1
+  Windows: 2
+  macOS: 10
+  macOS_xl: 10
+
+larger_runners:
+  linux_2core: 0.008
+  linux_4core: 0.016
+  linux_8core: 0.032
+  linux_16core: 0.064
+  linux_32core: 0.128
+  linux_64core: 0.256
+  windows_8core: 0.064
+  macos_12core: 0.080
+
+free_tiers:
+  free: 2000
+  pro: 3000
+  team: 3000
+  enterprise: 50000
+

@@ -1,0 +1,29 @@
+repos:
+  - owner/repo-a
+
+scan:
+  days: 30
+  workers: 4
+  incremental: true
+
+pricing:
+  source: default
+
+free_tier:
+  plan: free
+  minutes_per_month: 2000
+
+budget:
+  monthly: 100
+  weekly: 0
+  notify: stdout
+  webhook_url: ""
+
+output:
+  format: table
+  color: auto
+
+ignore:
+  workflows:
+    - "Dependabot auto-merge"
+

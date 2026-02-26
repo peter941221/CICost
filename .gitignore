@@ -1,0 +1,25 @@
+# Binaries
+bin/
+dist/
+*.exe
+*.exe~
+
+# Build artifacts
+*.out
+*.test
+
+# Logs
+*.log
+
+# Local data and cache
+.cicost/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
