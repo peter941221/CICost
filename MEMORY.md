@@ -45,6 +45,36 @@
   - pushed tag `v0.1.0`
   - release workflow completed successfully
   - GitHub Release published with cicost + gh-cicost artifacts and checksums
+
+## 2026-02-26 (Post-v0.1.0 Product Strategy)
+
+### Competitive Research Summary
+
+- Benchmarked key alternatives and adjacent products:
+  - GitHub native billing/runner pricing docs (source-of-truth for rates and quotas)
+  - Datadog CI Visibility (pipeline observability + committer-based pricing)
+  - BuildPulse (flaky tests + CI speed/cost claims)
+  - BuildJet / Depot / RunsOn (runner-layer cost optimization vendors)
+  - Infracost (FinOps-in-PR for IaC, policy and guardrail style)
+
+### Product Gap Highlights
+
+- Current CICost pricing defaults are legacy (`linux_per_min: 0.008` with multipliers), while current GitHub docs show SKU-based rates (e.g., Linux 2-core `0.006`, Windows 2-core `0.010`, macOS `0.062`).
+- CICost currently estimates from local workflow/job durations only; lacks org-level calibration against real billing exports.
+- Suggestion engine is useful but still shallow compared to “policy + guardrail + automation” products.
+
+### Strengthening Priorities
+
+1. Pricing accuracy v2:
+   - switch from multiplier model to SKU-based rate table
+   - support dated pricing snapshots and explicit effective dates
+2. Confidence & calibration:
+   - add optional reconciliation mode against GitHub billing endpoints/exports
+   - surface confidence bands in report
+3. Guardrails:
+   - add policy engine (budget by repo/team/workflow, fail PR on threshold)
+4. Monetizable differentiation:
+   - “waste prevention mode” with actionable YAML patch suggestions and PR comments
 - Completed live end-to-end smoke run against public repo `cli/cli`:
   - `scan`, `report`, `hotspots`, `explain`, `budget` all executable.
 
