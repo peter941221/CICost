@@ -41,6 +41,10 @@
   - set default CLI version to `0.1.0`
   - added `CHANGELOG.md` first release notes
   - linked changelog in README distribution section
+- Released `v0.1.0`:
+  - pushed tag `v0.1.0`
+  - release workflow completed successfully
+  - GitHub Release published with cicost + gh-cicost artifacts and checksums
 - Completed live end-to-end smoke run against public repo `cli/cli`:
   - `scan`, `report`, `hotspots`, `explain`, `budget` all executable.
 
