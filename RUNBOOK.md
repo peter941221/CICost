@@ -50,3 +50,17 @@ git add .
 git commit -m "chore: bootstrap cicost repository scaffold"
 git push -u origin main
 ```
+
+## Release (Tag-Based)
+
+```powershell
+go test ./...
+go test -race ./...
+go vet ./...
+goreleaser check
+
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Then GitHub Actions `release.yml` publishes binaries and checksums.

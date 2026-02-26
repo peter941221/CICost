@@ -30,6 +30,13 @@
 - Added unit tests for pricing, budget, waste, pagination, and sync cursor.
 - Added command-level integration test (`cmd/integration_test.go`) for report + budget path.
 - Added `CICOST_GITHUB_API_BASE_URL` override to support mock server / enterprise API endpoints.
+- Added release/distribution pipeline:
+  - `.goreleaser.yml` for dual binaries (`cicost`, `gh-cicost`) + checksums.
+  - `.github/workflows/release.yml` for tag-triggered release publishing.
+  - `cmd/gh-cicost/main.go` as GitHub CLI extension entrypoint.
+  - `Formula/cicost.rb` template for Homebrew tap publishing.
+  - `docs/RELEASE.md` with tagging and distribution runbook.
+- Installed local `goreleaser` and validated release config via `goreleaser check`.
 - Completed live end-to-end smoke run against public repo `cli/cli`:
   - `scan`, `report`, `hotspots`, `explain`, `budget` all executable.
 

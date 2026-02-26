@@ -42,6 +42,14 @@ go run . budget --repo owner/repo --monthly 100
 go run . explain --repo owner/repo
 ```
 
+## Distribution
+
+- Standalone binary: GitHub Releases artifacts (`cicost_*`).
+- GitHub CLI extension: `gh extension install peter941221/CICost` then `gh cicost ...`.
+- Homebrew: formula template at `Formula/cicost.rb`.
+- Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`.
+- Release runbook: `docs/RELEASE.md`.
+
 ## Config
 
 - 用户级: `~/.cicost/config.yml`

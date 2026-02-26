@@ -1,0 +1,86 @@
+version: 2
+
+project_name: cicost
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+builds:
+  - id: cicost
+    main: ./main.go
+    binary: cicost
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X github.com/peter941221/CICost/cmd.version={{ .Version }} -X github.com/peter941221/CICost/cmd.commit={{ .Commit }} -X github.com/peter941221/CICost/cmd.builtAt={{ .Date }}
+
+  - id: gh-cicost
+    main: ./cmd/gh-cicost/main.go
+    binary: gh-cicost
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X github.com/peter941221/CICost/cmd.version={{ .Version }} -X github.com/peter941221/CICost/cmd.commit={{ .Commit }} -X github.com/peter941221/CICost/cmd.builtAt={{ .Date }}
+
+archives:
+  - id: cicost
+    ids:
+      - cicost
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+
+  - id: gh-cicost
+    ids:
+      - gh-cicost
+    name_template: "gh-cicost_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  use: git
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  github:
+    owner: peter941221
+    name: CICost
+  prerelease: auto
+
