@@ -2,35 +2,51 @@
 
 GitHub Actions 成本与浪费热区分析 CLI（MVP）。
 
-## Current Status
+## MVP Status (2026-02-26)
 
-- Date: 2026-02-26
-- Stage: Repo initialized + scaffold ready
-- Next: Implement `scan -> store -> report` happy path
+- [x] 独立仓库初始化
+- [x] 核心命令可执行（init/scan/report/hotspots/budget/explain/config/version）
+- [x] SQLite 缓存与增量游标
+- [x] 成本/浪费/热区/预算分析基础实现
+- [x] 单元测试与 CI 工作流
+- [ ] GitHub API 录制 fixture 的端到端集成测试（下一阶段）
+
+## Architecture
+
+```text
+User CLI
+   |
+   v
+Command Router (cmd/*)
+   |
+   +--> Config/Auth
+   +--> GitHub API Client
+   +--> SQLite Store
+   +--> Analytics Engine
+   +--> Output Formatter
+```
 
 ## Quick Start
 
-1. Install Go 1.23+
-2. Build:
+1. 安装 Go 1.26+
+2. 认证（任选其一）:
+   - `gh auth login`
+   - `set GITHUB_TOKEN=ghp_xxx` (Windows)
+3. 拉取并生成报告:
 
 ```bash
-make build
+go run . scan --repo owner/repo --days 30
+go run . report --repo owner/repo --format table
+go run . hotspots --repo owner/repo --group-by workflow --top 5
+go run . budget --repo owner/repo --monthly 100
+go run . explain --repo owner/repo
 ```
 
-3. Run:
+## Config
 
-```bash
-./bin/cicost help
-```
-
-## Command Roadmap
-
-- `cicost init`
-- `cicost scan --repo owner/repo --days 30`
-- `cicost report --repo owner/repo --format table`
-- `cicost hotspots --group-by workflow --top 10`
-- `cicost budget --monthly 100`
-- `cicost explain --repo owner/repo`
+- 用户级: `~/.cicost/config.yml`
+- 仓库级: `.cicost.yml`
+- 示例: `.cicost.yml.example`
 
 ## Project Layout
 
@@ -51,4 +67,3 @@ CICost/
 ├── MEMORY.md           # project memory
 └── RUNBOOK.md          # execution handbook
 ```
-

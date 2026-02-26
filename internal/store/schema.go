@@ -61,5 +61,10 @@ CREATE TABLE IF NOT EXISTS budget_checks (
     actual_usd      REAL NOT NULL,
     exceeded        INTEGER DEFAULT 0,
     checked_at      TEXT NOT NULL DEFAULT (datetime('now'))
-);`
+);
 
+CREATE INDEX IF NOT EXISTS idx_runs_repo_created ON workflow_runs(repo, created_at);
+CREATE INDEX IF NOT EXISTS idx_runs_repo_workflow ON workflow_runs(repo, workflow_name);
+CREATE INDEX IF NOT EXISTS idx_jobs_run_id ON jobs(run_id, run_attempt);
+CREATE INDEX IF NOT EXISTS idx_jobs_repo_runner ON jobs(repo, runner_os);
+`

@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test (race)
+        run: go test -race ./...
+
+      - name: Build
+        run: go build ./...
+
+  cross-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+
+      - name: Build linux amd64
+        run: GOOS=linux GOARCH=amd64 go build -o dist/cicost_linux_amd64 .
+
+      - name: Build linux arm64
+        run: GOOS=linux GOARCH=arm64 go build -o dist/cicost_linux_arm64 .
+
+      - name: Build darwin amd64
+        run: GOOS=darwin GOARCH=amd64 go build -o dist/cicost_darwin_amd64 .
+
+      - name: Build darwin arm64
+        run: GOOS=darwin GOARCH=arm64 go build -o dist/cicost_darwin_arm64 .
+
+      - name: Build windows amd64
+        run: GOOS=windows GOARCH=amd64 go build -o dist/cicost_windows_amd64.exe .
+

@@ -18,19 +18,21 @@ $env:GITHUB_TOKEN="ghp_xxx"
 ## Local Development
 
 ```powershell
-make build
-make test
+go test ./...
+go run . help
+go run . scan --repo owner/repo --days 30
+go run . report --repo owner/repo --format table
 ```
 
 ## First Milestone (D1)
 
-1. Implement `internal/auth` full chain:
+1. ✅ `internal/auth` full chain:
    - CLI token
    - `GITHUB_TOKEN` / `GH_TOKEN`
    - `gh auth token`
    - user config fallback
-2. Implement `internal/github` runs endpoint fetch.
-3. Wire `cicost scan --repo owner/repo --days 30` minimal output.
+2. ✅ `internal/github` runs/jobs endpoint fetch + pagination.
+3. ✅ `cicost scan --repo owner/repo --days 30` 输出入库摘要。
 
 ## Validation Commands
 
@@ -48,4 +50,3 @@ git add .
 git commit -m "chore: bootstrap cicost repository scaffold"
 git push -u origin main
 ```
-

@@ -11,14 +11,36 @@
 - Added baseline project files: `.gitignore`, `Makefile`, `README.md`, `.cicost.yml.example`, `configs/pricing_default.yml`.
 - Created initial commit: `22a1f73 chore: bootstrap cicost repository scaffold`.
 - Pushed branch `main` to remote `origin/main`.
+- Installed Go toolchain via Scoop (`go1.26.0`) and removed local environment blocker.
+- Implemented MVP command chain:
+  - `init/config` (config bootstrap + merged config show/edit)
+  - `scan` (GitHub API runs/jobs fetch + pagination + worker pool + SQLite upsert + sync cursor)
+  - `report` (table/md/json/csv output + compare)
+  - `hotspots` (workflow/job/runner/branch ranking)
+  - `budget` (weekly/monthly threshold, projection, webhook/file/stdout, exit code 2)
+  - `explain` (rule-based optimization suggestions)
+- Implemented core modules:
+  - `internal/config` merged configuration hierarchy
+  - `internal/auth` token chain (CLI/env/gh/config)
+  - `internal/github` REST client + pagination parsing
+  - `internal/store` SQLite schema + cursor + query interfaces
+  - `internal/analytics` cost/waste/hotspots/budget/trend
+  - `internal/output` table/markdown/json/csv rendering
+- Added CI workflow `.github/workflows/ci.yml` with `go vet`, `go test -race`, and cross-platform builds.
+- Added unit tests for pricing, budget, waste, pagination, and sync cursor.
+- Added command-level integration test (`cmd/integration_test.go`) for report + budget path.
+- Added `CICOST_GITHUB_API_BASE_URL` override to support mock server / enterprise API endpoints.
+- Completed live end-to-end smoke run against public repo `cli/cli`:
+  - `scan`, `report`, `hotspots`, `explain`, `budget` all executable.
 
 ### Decisions
 
 - Chose independent nested repo strategy to avoid contaminating parent monorepo changes.
-- Used standard-library-only scaffold for now because Go toolchain is missing on this machine.
+- Chose `modernc.org/sqlite` (pure Go) to avoid CGO friction on Windows.
+- Kept CLI parser on Go stdlib `flag` for lightweight MVP delivery.
 
 ### Next Actions
 
-1. Install Go 1.23+ and run baseline build/test.
-2. Implement D1 milestone: auth + GitHub runs fetch + minimal scan output.
-3. Add fixture-driven tests for pagination and pricing.
+1. Add recorded fixture-based integration tests for scan/report deterministic CI.
+2. Improve `scan` incremental window and data completeness accounting.
+3. Add GoReleaser packaging and gh extension adapter.

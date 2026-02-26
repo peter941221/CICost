@@ -12,4 +12,3 @@ func runVersion(_ []string) error {
 	fmt.Printf("cicost %s (commit: %s, built: %s)\n", version, commit, builtAt)
 	return nil
 }
-

@@ -45,13 +45,13 @@ Usage:
   cicost <command> [flags]
 
 Commands:
-  init       交互式初始化配置（待实现）
-  scan       拉取数据并缓存（待实现）
-  report     生成成本报告（待实现）
-  hotspots   生成热区排行（待实现）
-  budget     预算告警（待实现）
-  explain    优化建议（待实现）
-  config     查看/编辑配置（待实现）
+  init       交互式初始化配置
+  scan       拉取 GitHub Actions 数据并缓存到 SQLite
+  report     生成综合成本报告（table/md/json/csv）
+  hotspots   热区排行（workflow/job/runner/branch）
+  budget     预算告警（stdout/webhook/file）
+  explain    生成可执行优化建议
+  config     show/edit 配置
   version    打印版本信息
   help       显示帮助信息`)
 	return nil
@@ -59,3 +59,28 @@ Commands:
 
 var errNotImplemented = errors.New("not implemented yet; see 技术文档.MD for MVP scope")
 
+type ExitError struct {
+	Code int
+	Err  error
+}
+
+func (e ExitError) Error() string {
+	if e.Err == nil {
+		return fmt.Sprintf("exit code %d", e.Code)
+	}
+	return e.Err.Error()
+}
+
+func (e ExitError) Unwrap() error { return e.Err }
+
+func withExit(code int, err error) error {
+	return ExitError{Code: code, Err: err}
+}
+
+func ExitCode(err error) int {
+	var ex ExitError
+	if errors.As(err, &ex) && ex.Code > 0 {
+		return ex.Code
+	}
+	return 1
+}

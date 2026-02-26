@@ -11,4 +11,3 @@ func ChargedMinutes(totalBillable, freeTier, alreadyUsed float64) float64 {
 	}
 	return charged
 }
-

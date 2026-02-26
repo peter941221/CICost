@@ -24,4 +24,3 @@ func NextPageURL(h http.Header) string {
 	}
 	return ""
 }
-
