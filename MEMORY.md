@@ -9,6 +9,8 @@
 - Parsed `技术文档.MD` and aligned initial scaffold with the documented structure.
 - Added first-pass Go CLI skeleton and internal package placeholders.
 - Added baseline project files: `.gitignore`, `Makefile`, `README.md`, `.cicost.yml.example`, `configs/pricing_default.yml`.
+- Created initial commit: `22a1f73 chore: bootstrap cicost repository scaffold`.
+- Pushed branch `main` to remote `origin/main`.
 
 ### Decisions
 
@@ -20,4 +22,3 @@
 1. Install Go 1.23+ and run baseline build/test.
 2. Implement D1 milestone: auth + GitHub runs fetch + minimal scan output.
 3. Add fixture-driven tests for pagination and pricing.
-
