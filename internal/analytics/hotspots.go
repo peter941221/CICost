@@ -58,14 +58,16 @@ func CalculateHotspots(runs []model.WorkflowRun, jobs []model.Job, cfg pricing.C
 			a = &agg{name: groupName, groupType: opts.GroupBy, runIDs: map[int64]struct{}{}}
 			aggs[groupName] = a
 		}
-		billable := pricing.BillableMinutes(j.DurationSec, j.RunnerOS, cfg)
-		cost := billable * cfg.PerMinuteUSD
-		a.minutes += billable
-		a.cost += cost
+		quote, err := pricing.PriceJob(j.DurationSec, j.RunnerOS, j.RunnerName, j.StartedAt, cfg)
+		if err != nil {
+			continue
+		}
+		a.minutes += quote.BillableMinutes
+		a.cost += quote.CostUSD
 		a.runIDs[j.RunID] = struct{}{}
 		a.durSum += float64(j.DurationSec)
 		a.jobCount++
-		totalCost += cost
+		totalCost += quote.CostUSD
 	}
 
 	for _, r := range runs {

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/peter941221/CICost/internal/config"
+	"github.com/peter941221/CICost/internal/pricing"
 )
 
 type runtimeContext struct {
@@ -60,4 +61,42 @@ func writeOutput(path string, content string) error {
 		return err
 	}
 	return os.WriteFile(path, []byte(content), 0o644)
+}
+
+func loadPricingConfig(rt runtimeContext) (pricing.Config, error) {
+	candidates := []string{
+		filepath.Join("configs", "pricing_default.yml"),
+		filepath.Join("..", "configs", "pricing_default.yml"),
+	}
+	var cfg pricing.Config
+	var loaded bool
+	for _, p := range candidates {
+		if _, err := os.Stat(p); err != nil {
+			continue
+		}
+		c, err := pricing.LoadFromFile(p)
+		if err != nil {
+			return pricing.Config{}, err
+		}
+		cfg = c
+		loaded = true
+		break
+	}
+	if !loaded {
+		cfg = pricing.Config{}
+	}
+	if cfg.PerMinuteUSD == 0 {
+		cfg.PerMinuteUSD = rt.cfg.Pricing.LinuxPerMin
+	}
+	if rt.cfg.Pricing.WindowsMultiplier > 0 {
+		cfg.WindowsMultiplier = rt.cfg.Pricing.WindowsMultiplier
+	}
+	if rt.cfg.Pricing.MacOSMultiplier > 0 {
+		cfg.MacOSMultiplier = rt.cfg.Pricing.MacOSMultiplier
+	}
+	cfg.FreeTierPerMonth = rt.cfg.FreeTier.MinutesPerMonth
+	if len(cfg.Snapshots) == 0 {
+		fmt.Fprintln(os.Stderr, "WARN: pricing_snapshots not found; fallback to legacy OS multiplier pricing.")
+	}
+	return cfg, nil
 }

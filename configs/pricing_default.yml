@@ -1,4 +1,5 @@
 version: "2026.02"
+effective_from: "2026-02-01"
 per_minute_usd: 0.008
 
 multipliers:
@@ -23,3 +24,22 @@ free_tiers:
   team: 3000
   enterprise: 50000
 
+pricing_snapshots:
+  - version: "2026.01"
+    effective_from: "2026-01-01"
+    skus:
+      linux: 0.0080
+      windows: 0.0160
+      macos: 0.0800
+      ubuntu-latest: 0.0080
+      windows-latest: 0.0160
+      macos-latest: 0.0800
+  - version: "2026.02"
+    effective_from: "2026-02-15"
+    skus:
+      linux: 0.0075
+      windows: 0.0150
+      macos: 0.0750
+      ubuntu-latest: 0.0075
+      windows-latest: 0.0150
+      macos-latest: 0.0750

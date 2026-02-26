@@ -11,7 +11,6 @@ import (
 
 	"github.com/peter941221/CICost/internal/analytics"
 	"github.com/peter941221/CICost/internal/config"
-	"github.com/peter941221/CICost/internal/pricing"
 	"github.com/peter941221/CICost/internal/store"
 )
 
@@ -68,17 +67,10 @@ func runBudget(args []string) error {
 	if err != nil {
 		return err
 	}
-	pcfg, _ := pricing.LoadFromFile("configs/pricing_default.yml")
-	if pcfg.PerMinuteUSD == 0 {
-		pcfg.PerMinuteUSD = rt.cfg.Pricing.LinuxPerMin
+	pcfg, err := loadPricingConfig(rt)
+	if err != nil {
+		return err
 	}
-	if pcfg.WindowsMultiplier == 0 {
-		pcfg.WindowsMultiplier = rt.cfg.Pricing.WindowsMultiplier
-	}
-	if pcfg.MacOSMultiplier == 0 {
-		pcfg.MacOSMultiplier = rt.cfg.Pricing.MacOSMultiplier
-	}
-	pcfg.FreeTierPerMonth = rt.cfg.FreeTier.MinutesPerMonth
 	cost, _ := analytics.CalculateCost(jobs, pcfg, 1.0)
 	result := analytics.EvaluateBudget(now, cost.TotalCostUSD, threshold, checkType)
 	top := analytics.CalculateHotspots(runs, jobs, pcfg, analytics.HotspotOptions{

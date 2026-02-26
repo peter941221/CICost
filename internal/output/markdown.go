@@ -20,6 +20,18 @@ func RenderReportMarkdown(v ReportView) string {
 	fmt.Fprintf(&b, "| Total Minutes (billable) | %.2f |\n", v.Cost.BillableMinutes)
 	fmt.Fprintf(&b, "| Estimated Cost (USD) | $%.2f |\n", v.Cost.TotalCostUSD)
 	fmt.Fprintf(&b, "| Free Tier Used | %.2f min |\n\n", v.Cost.FreeTierUsed)
+	if v.PricingSnapshotVersion != "" || v.PricingSource != "" {
+		fmt.Fprintf(&b, "## Pricing\n\n")
+		fmt.Fprintf(&b, "| Metric | Value |\n|---|---|\n")
+		fmt.Fprintf(&b, "| Pricing Source | %s |\n", v.PricingSource)
+		fmt.Fprintf(&b, "| Snapshot Version | %s |\n", v.PricingSnapshotVersion)
+		fmt.Fprintf(&b, "| Effective From | %s |\n", v.PricingEffectiveFrom)
+		if v.Calibrated {
+			fmt.Fprintf(&b, "| Calibrated | yes |\n")
+			fmt.Fprintf(&b, "| Calibration Factor | %.4f |\n", v.CalibrationFactor)
+		}
+		fmt.Fprintf(&b, "\n")
+	}
 
 	fmt.Fprintf(&b, "## Waste\n\n")
 	fmt.Fprintf(&b, "| Metric | Value |\n|---|---:|\n")

@@ -13,4 +13,3 @@ func main() {
 		os.Exit(cmd.ExitCode(err))
 	}
 }
-

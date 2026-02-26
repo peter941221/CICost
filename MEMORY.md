@@ -46,6 +46,26 @@
   - release workflow completed successfully
   - GitHub Release published with cicost + gh-cicost artifacts and checksums
 
+## 2026-02-26 (Planning Enhancement v2)
+
+### Progress
+
+- Added `技术文档2.MD` as post-v0.1.0 strengthening blueprint.
+- Document includes:
+  - competitive positioning summary
+  - v2 architecture upgrade
+  - feature roadmap (pricing v2 / reconcile / policy / suggestion / org-report)
+  - detailed acceptance criteria (AC-PRICING/REC/POL/SUG/ORG)
+  - test gate and risk-tier matrix
+  - release/rollback strategy and done definition
+
+### Validation
+
+- Verified file creation and structure:
+  - file exists
+  - 300+ lines content
+  - AC entries detected and indexed
+
 ## 2026-02-26 (Post-v0.1.0 Product Strategy)
 
 ### Competitive Research Summary
@@ -89,3 +109,41 @@
 1. Add recorded fixture-based integration tests for scan/report deterministic CI.
 2. Improve `scan` incremental window and data completeness accounting.
 3. Add GoReleaser packaging and gh extension adapter.
+
+## 2026-02-26 (v2 Implementation Sprint)
+
+### Progress
+
+- Implemented Pricing v2 engine:
+  - added `pricing_snapshots` + `effective_from` loader support
+  - added snapshot resolver and SKU direct rate pricing
+  - kept legacy multiplier fallback with warning
+- Upgraded schema to v2 with new tables:
+  - `billing_snapshots`
+  - `reconcile_results`
+  - `policy_runs`
+  - `suggestion_history`
+- Added `reconcile` command:
+  - monthly estimate vs actual reconciliation
+  - confidence grading and calibration factor persistence
+  - optional `--apply-calibration` for future `report --calibrated`
+- Added policy engine and command group:
+  - `policy lint/check/explain`
+  - expression parser for threshold rules
+  - CI gate behavior (`error => exit code 3`)
+- Added suggestion engine v2 and `suggest` command:
+  - text/yaml output
+  - executable patch file export
+  - evidence-backed recommendations only
+- Added `org-report` command:
+  - multi-repo parallel aggregation
+  - partial result support when some repos have no data/fail
+- Updated docs and examples:
+  - README, RUNBOOK, CHANGELOG
+  - added `.cicost.policy.yml.example`
+
+### Validation
+
+- `go test ./...` ✅
+- `go test -race ./...` ✅
+- `go vet ./...` ✅

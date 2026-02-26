@@ -1,29 +1,29 @@
 # CICost
 
-GitHub Actions 成本与浪费热区分析 CLI（MVP）。
+GitHub Actions 成本分析与治理 CLI。
 
-## MVP Status (2026-02-26)
+## Status (2026-02-26)
 
-- [x] 独立仓库初始化
-- [x] 核心命令可执行（init/scan/report/hotspots/budget/explain/config/version）
-- [x] SQLite 缓存与增量游标
-- [x] 成本/浪费/热区/预算分析基础实现
-- [x] 单元测试与 CI 工作流
-- [ ] GitHub API 录制 fixture 的端到端集成测试（下一阶段）
+- [x] Pricing v2：SKU 定价 + `effective_from` 版本快照
+- [x] Reconcile：估算值与实际账单对账 + 校准系数
+- [x] Policy Gate：`policy lint/check/explain` + `error => exit code 3`
+- [x] Suggest：可执行优化建议（`text|yaml` + patch 文件导出）
+- [x] Org Report：多仓聚合，支持 partial result
+- [x] 测试门禁：`go test ./...` / `go test -race ./...` / `go vet ./...`
 
 ## Architecture
 
 ```text
-User CLI
+User / CI
    |
    v
-Command Router (cmd/*)
+Commands: scan/report/reconcile/policy/suggest/org-report
    |
    +--> Config/Auth
-   +--> GitHub API Client
-   +--> SQLite Store
-   +--> Analytics Engine
-   +--> Output Formatter
+   +--> GitHub Data Ingestion
+   +--> SQLite Store (runs/jobs/billing/reconcile/policy/suggest)
+   +--> Analytics + Policy Engine
+   +--> Output (table/md/json/csv/yaml)
 ```
 
 ## Quick Start
@@ -32,47 +32,50 @@ Command Router (cmd/*)
 2. 认证（任选其一）:
    - `gh auth login`
    - `set GITHUB_TOKEN=ghp_xxx` (Windows)
-3. 拉取并生成报告:
+3. 执行核心流程:
 
 ```bash
 go run . scan --repo owner/repo --days 30
 go run . report --repo owner/repo --format table
-go run . hotspots --repo owner/repo --group-by workflow --top 5
-go run . budget --repo owner/repo --monthly 100
-go run . explain --repo owner/repo
+go run . reconcile --repo owner/repo --month 2026-02 --actual-usd 123.45 --apply-calibration
+go run . report --repo owner/repo --calibrated --format json
+go run . policy lint --policy .cicost.policy.yml
+go run . policy check --repo owner/repo --days 30
+go run . suggest --repo owner/repo --format yaml --output patches/
+go run . org-report --repos repos.txt --days 30 --format md
 ```
-
-## Distribution
-
-- Standalone binary: GitHub Releases artifacts (`cicost_*`).
-- GitHub CLI extension: `gh extension install peter941221/CICost` then `gh cicost ...`.
-- Homebrew: formula template at `Formula/cicost.rb`.
-- Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`.
-- Release runbook: `docs/RELEASE.md`.
-- Release notes: `CHANGELOG.md`.
 
 ## Config
 
 - 用户级: `~/.cicost/config.yml`
 - 仓库级: `.cicost.yml`
-- 示例: `.cicost.yml.example`
+- 策略文件: `.cicost.policy.yml`（示例：`.cicost.policy.yml.example`）
+- 定价文件: `configs/pricing_default.yml`（支持 `pricing_snapshots`）
+
+## Distribution
+
+- Standalone binary: GitHub Releases artifacts (`cicost_*`)
+- GitHub CLI extension: `gh extension install peter941221/CICost`
+- Homebrew: `Formula/cicost.rb`
+- Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`
+- Release runbook: `docs/RELEASE.md`
 
 ## Project Layout
 
 ```text
 CICost/
-├── cmd/                # CLI command router
+├── cmd/                     # CLI commands
 ├── internal/
-│   ├── analytics/      # cost/waste/hotspot/budget logic
-│   ├── auth/           # token resolution
-│   ├── github/         # API client and pagination
-│   ├── model/          # shared domain types
-│   ├── output/         # table/md/json/csv formatters
-│   ├── pricing/        # pricing and free tier logic
-│   └── store/          # SQLite schema and sync cursor
-├── configs/            # pricing defaults
-├── testdata/           # fixtures for integration tests
-├── 技术文档.MD          # product + technical spec v1.0
-├── MEMORY.md           # project memory
-└── RUNBOOK.md          # execution handbook
+│   ├── analytics/           # cost/waste/hotspot/budget
+│   ├── billing/             # billing import adapters
+│   ├── policy/              # policy parser + evaluator
+│   ├── pricing/             # pricing snapshots + resolver
+│   ├── reconcile/           # estimate-vs-actual calibration
+│   ├── suggest/             # actionable patch suggestions
+│   └── store/               # SQLite schema v2 + access layer
+├── configs/
+├── 技术文档.MD
+├── 技术文档2.MD
+├── MEMORY.md
+└── RUNBOOK.md
 ```

@@ -22,17 +22,31 @@ go test ./...
 go run . help
 go run . scan --repo owner/repo --days 30
 go run . report --repo owner/repo --format table
+go run . reconcile --repo owner/repo --month 2026-02 --actual-usd 120.50 --apply-calibration
+go run . policy lint --policy .cicost.policy.yml
+go run . policy check --repo owner/repo --days 30
+go run . suggest --repo owner/repo --format yaml --output patches/
+go run . org-report --repos repos.txt --days 30 --format md
 ```
 
-## First Milestone (D1)
+## v2 Commands
 
-1. ✅ `internal/auth` full chain:
-   - CLI token
-   - `GITHUB_TOKEN` / `GH_TOKEN`
-   - `gh auth token`
-   - user config fallback
-2. ✅ `internal/github` runs/jobs endpoint fetch + pagination.
-3. ✅ `cicost scan --repo owner/repo --days 30` 输出入库摘要。
+1. `reconcile`
+   - `--repo owner/repo`
+   - `--month YYYY-MM`
+   - `--source csv|github`
+   - `--actual-usd 123.45`
+   - `--apply-calibration`
+2. `policy`
+   - `lint`
+   - `check`
+   - `explain`
+3. `suggest`
+   - `--format text|yaml`
+   - `--output patches/`
+4. `org-report`
+   - `--repos repos.txt`
+   - `--format md|json`
 
 ## Validation Commands
 
@@ -40,6 +54,8 @@ go run . report --repo owner/repo --format table
 git status --short
 git remote -v
 go test ./...
+go test -race ./...
+go vet ./...
 go run . help
 ```
 
@@ -59,8 +75,8 @@ go test -race ./...
 go vet ./...
 goreleaser check
 
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 Then GitHub Actions `release.yml` publishes binaries and checksums.

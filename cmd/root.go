@@ -9,15 +9,19 @@ import (
 type commandHandler func(args []string) error
 
 var commands = map[string]commandHandler{
-	"init":     runInit,
-	"scan":     runScan,
-	"report":   runReport,
-	"hotspots": runHotspots,
-	"budget":   runBudget,
-	"explain":  runExplain,
-	"config":   runConfig,
-	"version":  runVersion,
-	"help":     runHelp,
+	"init":       runInit,
+	"scan":       runScan,
+	"report":     runReport,
+	"reconcile":  runReconcile,
+	"policy":     runPolicy,
+	"hotspots":   runHotspots,
+	"budget":     runBudget,
+	"suggest":    runSuggest,
+	"org-report": runOrgReport,
+	"explain":    runExplain,
+	"config":     runConfig,
+	"version":    runVersion,
+	"help":       runHelp,
 }
 
 // Execute routes subcommands and returns a structured error for main() to print.
@@ -48,6 +52,10 @@ Commands:
   init       交互式初始化配置
   scan       拉取 GitHub Actions 数据并缓存到 SQLite
   report     生成综合成本报告（table/md/json/csv）
+  reconcile  估算值与实际账单对账并生成校准系数
+  policy     策略门禁（check/lint/explain）
+  suggest    生成可执行优化建议（text/yaml + patch）
+  org-report 多仓聚合报告（md/json，支持 partial result）
   hotspots   热区排行（workflow/job/runner/branch）
   budget     预算告警（stdout/webhook/file）
   explain    生成可执行优化建议

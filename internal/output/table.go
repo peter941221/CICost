@@ -10,14 +10,19 @@ import (
 )
 
 type ReportView struct {
-	Repo      string               `json:"repo"`
-	Start     time.Time            `json:"start"`
-	End       time.Time            `json:"end"`
-	Days      int                  `json:"days"`
-	TotalRuns int                  `json:"total_runs"`
-	Cost      model.CostResult     `json:"cost"`
-	Waste     model.WasteMetrics   `json:"waste"`
-	Hotspots  []model.HotspotEntry `json:"hotspots,omitempty"`
+	Repo                   string               `json:"repo"`
+	Start                  time.Time            `json:"start"`
+	End                    time.Time            `json:"end"`
+	Days                   int                  `json:"days"`
+	TotalRuns              int                  `json:"total_runs"`
+	Cost                   model.CostResult     `json:"cost"`
+	Waste                  model.WasteMetrics   `json:"waste"`
+	Hotspots               []model.HotspotEntry `json:"hotspots,omitempty"`
+	PricingSnapshotVersion string               `json:"pricing_snapshot_version,omitempty"`
+	PricingEffectiveFrom   string               `json:"pricing_effective_from,omitempty"`
+	PricingSource          string               `json:"pricing_source,omitempty"`
+	Calibrated             bool                 `json:"calibrated"`
+	CalibrationFactor      float64              `json:"calibration_factor,omitempty"`
 }
 
 func RenderReportTable(v ReportView) string {
@@ -30,6 +35,20 @@ func RenderReportTable(v ReportView) string {
 	fmt.Fprintf(&b, "  Total Minutes (billable): %.2f\n", v.Cost.BillableMinutes)
 	fmt.Fprintf(&b, "  Estimated Cost: $%.2f\n", v.Cost.TotalCostUSD)
 	fmt.Fprintf(&b, "  Free Tier Used: %.2f min\n\n", v.Cost.FreeTierUsed)
+	if v.PricingSnapshotVersion != "" || v.PricingSource != "" {
+		fmt.Fprintf(&b, "PRICING\n")
+		fmt.Fprintf(&b, "  Source: %s\n", v.PricingSource)
+		if v.PricingSnapshotVersion != "" {
+			fmt.Fprintf(&b, "  Snapshot Version: %s\n", v.PricingSnapshotVersion)
+		}
+		if v.PricingEffectiveFrom != "" {
+			fmt.Fprintf(&b, "  Effective From: %s\n", v.PricingEffectiveFrom)
+		}
+		if v.Calibrated {
+			fmt.Fprintf(&b, "  Calibrated: yes (factor=%.4f)\n", v.CalibrationFactor)
+		}
+		fmt.Fprintf(&b, "\n")
+	}
 
 	fmt.Fprintf(&b, "WASTE\n")
 	fmt.Fprintf(&b, "  Fail Rate: %.1f%%\n", v.Waste.FailRate*100)

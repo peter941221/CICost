@@ -7,7 +7,6 @@ import (
 	"github.com/peter941221/CICost/internal/analytics"
 	"github.com/peter941221/CICost/internal/config"
 	"github.com/peter941221/CICost/internal/output"
-	"github.com/peter941221/CICost/internal/pricing"
 	"github.com/peter941221/CICost/internal/store"
 )
 
@@ -50,9 +49,9 @@ func runHotspots(args []string) error {
 	if err != nil {
 		return err
 	}
-	pcfg, _ := pricing.LoadFromFile("configs/pricing_default.yml")
-	if pcfg.PerMinuteUSD == 0 {
-		pcfg.PerMinuteUSD = rt.cfg.Pricing.LinuxPerMin
+	pcfg, err := loadPricingConfig(rt)
+	if err != nil {
+		return err
 	}
 	entries := analytics.CalculateHotspots(runs, jobs, pcfg, analytics.HotspotOptions{
 		GroupBy: *groupByFlag,

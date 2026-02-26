@@ -1,0 +1,14 @@
+rules:
+  - id: budget_monthly
+    when: monthly_cost_usd > 200
+    severity: error
+  - id: waste_ratio
+    when: waste_percentage > 25
+    severity: warn
+  - id: high_fail_rate
+    when: fail_rate > 15
+    severity: info
+
+actions:
+  on_error: fail_ci
+  on_warn: comment_pr

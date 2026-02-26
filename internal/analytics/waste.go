@@ -40,9 +40,12 @@ func CalculateWaste(runs []model.WorkflowRun, jobs []model.Job, cfg pricing.Conf
 			continue
 		}
 		key := runAttemptKey(j.RunID, j.RunAttempt)
-		billable := pricing.BillableMinutes(j.DurationSec, j.RunnerOS, cfg)
-		costByRunAttempt[key] += billable * cfg.PerMinuteUSD
-		minByRunAttempt[key] += billable
+		quote, err := pricing.PriceJob(j.DurationSec, j.RunnerOS, j.RunnerName, j.StartedAt, cfg)
+		if err != nil {
+			continue
+		}
+		costByRunAttempt[key] += quote.CostUSD
+		minByRunAttempt[key] += quote.BillableMinutes
 	}
 
 	var m model.WasteMetrics
