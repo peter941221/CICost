@@ -3,7 +3,7 @@ package cmd
 import "fmt"
 
 var (
-	version = "0.1.0-dev"
+	version = "0.1.0"
 	commit  = "none"
 	builtAt = "unknown"
 )

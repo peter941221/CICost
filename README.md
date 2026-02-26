@@ -49,6 +49,7 @@ go run . explain --repo owner/repo
 - Homebrew: formula template at `Formula/cicost.rb`.
 - Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`.
 - Release runbook: `docs/RELEASE.md`.
+- Release notes: `CHANGELOG.md`.
 
 ## Config
 

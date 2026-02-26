@@ -37,6 +37,10 @@
   - `Formula/cicost.rb` template for Homebrew tap publishing.
   - `docs/RELEASE.md` with tagging and distribution runbook.
 - Installed local `goreleaser` and validated release config via `goreleaser check`.
+- Prepared release candidate `v0.1.0`:
+  - set default CLI version to `0.1.0`
+  - added `CHANGELOG.md` first release notes
+  - linked changelog in README distribution section
 - Completed live end-to-end smoke run against public repo `cli/cli`:
   - `scan`, `report`, `hotspots`, `explain`, `budget` all executable.
 
