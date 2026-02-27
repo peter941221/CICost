@@ -307,3 +307,7 @@
 - `go vet ./...` ✅
 - `rg -n "REPLACE_WITH_REAL_SHA256|0.1.0" Formula/cicost.rb` ✅ (no matches)
 - workflow file review completed: `.github/workflows/sync-gh-extension.yml` ✅
+- configured repo secret: `GH_CICOST_REPO_TOKEN` ✅
+- workflow dispatch test:
+  - first run failed due missing token (`run_id=22469418997`) ❌
+  - rerun passed after secret setup (`run_id=22469443908`) ✅
