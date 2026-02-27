@@ -21,6 +21,6 @@ Write-Host "Building cicost.exe..." -ForegroundColor Yellow
 go build -o cicost.exe .
 
 Write-Host "Rendering GIF from tape (headless)..." -ForegroundColor Yellow
-& $vhs $Tape
+cmd /c "`"$vhs`" `"$Tape`""
 
 Write-Host "Done." -ForegroundColor Green

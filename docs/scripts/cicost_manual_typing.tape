@@ -10,28 +10,44 @@ Set Padding 20
 
 Type "cd 'C:\\AI Projects\\Fun Stuff\\IndieHacker\\CICost'"
 Enter
-Sleep 700ms
+Sleep 300ms
 
-Type "go build -o cicost.exe ."
+Type "Write-Host '[1/5] CLI version' -ForegroundColor Yellow"
 Enter
-Sleep 1500ms
+Sleep 300ms
 
 Type ".\\cicost.exe version"
 Enter
-Sleep 1200ms
+Sleep 900ms
 
-Type ".\\cicost.exe help"
+Type "Write-Host '[2/5] Command overview (help)' -ForegroundColor Yellow"
 Enter
-Sleep 1400ms
+Sleep 300ms
 
-Type ".\\cicost.exe policy explain"
+Type ".\\cicost.exe help | Select-Object -First 14"
 Enter
-Sleep 1500ms
+Sleep 900ms
 
-Type ".\\cicost.exe config show"
+Type "Write-Host '[3/5] Effective merged config (config show)' -ForegroundColor Yellow"
 Enter
-Sleep 1500ms
+Sleep 300ms
+
+Type ".\\cicost.exe config show | Select-Object -First 20"
+Enter
+Sleep 1000ms
+
+Type "Write-Host '[4/5] Policy file lint' -ForegroundColor Yellow"
+Enter
+Sleep 300ms
 
 Type ".\\cicost.exe policy lint --policy .cicost.policy.yml.example"
 Enter
-Sleep 1800ms
+Sleep 900ms
+
+Type "Write-Host '[5/5] Policy expression reference' -ForegroundColor Yellow"
+Enter
+Sleep 300ms
+
+Type ".\\cicost.exe policy explain | Select-Object -First 16"
+Enter
+Sleep 1200ms

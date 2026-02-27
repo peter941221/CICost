@@ -482,3 +482,25 @@
 
 - `git push origin main` ✅
 - remote update range: `e52d1f2..1af1392` ✅
+
+## 2026-02-27 (GIF Clarity Fix - Preflight First)
+
+### Progress
+
+- Addressed user-reported demo confusion and long idle frame issue.
+- Updated tape flow to a clearer 5-step walkthrough with visible section headers:
+  - version
+  - help overview
+  - config show preview
+  - policy lint
+  - policy explain
+- Removed build step from visible recording flow to avoid "looks stuck" perception.
+- Updated README GIF section with explicit "what this demo shows" bullets.
+- Stabilized headless recorder by switching VHS invocation to `cmd /c` in `record_cli_gif_headless.ps1`.
+- Re-rendered `docs/assets/cicost-cli-demo.gif` with the revised tape.
+
+### Validation
+
+- preflight command batch (`version/help/config/lint/explain`) => `ALL_OK` ✅
+- `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
+- `go test ./...` ✅
