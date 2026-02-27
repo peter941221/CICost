@@ -1,0 +1,83 @@
+name: sync-gh-extension
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to sync (example: v0.2.0)"
+        required: true
+        type: string
+
+jobs:
+  sync:
+    if: github.repository == 'peter941221/CICost'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Resolve tag
+        env:
+          TAG: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TAG}" ]; then
+            echo "tag is required"
+            exit 1
+          fi
+          echo "TAG=${TAG}" >> "$GITHUB_ENV"
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+
+      - name: Download extension artifacts from CICost release
+        env:
+          GH_TOKEN: ${{ secrets.GH_CICOST_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh release download "${TAG}" \
+            -R peter941221/CICost \
+            -D dist \
+            -p "gh-cicost_*" \
+            -p "checksums.txt"
+          ls -la dist
+
+      - name: Build gh-compatible extension binaries
+        run: |
+          set -euo pipefail
+
+          for target in "linux amd64" "linux arm64" "darwin amd64" "darwin arm64"; do
+            os="$(echo "$target" | cut -d' ' -f1)"
+            arch="$(echo "$target" | cut -d' ' -f2)"
+            archive="dist/gh-cicost_${VERSION}_${os}_${arch}.tar.gz"
+            tmpdir="$(mktemp -d)"
+            tar -xzf "$archive" -C "$tmpdir"
+            bin="$(find "$tmpdir" -type f -name gh-cicost | head -n1)"
+            cp "$bin" "dist/gh-cicost_v${VERSION}_${os}-${arch}"
+            chmod +x "dist/gh-cicost_v${VERSION}_${os}-${arch}"
+          done
+
+          win_archive="dist/gh-cicost_${VERSION}_windows_amd64.zip"
+          win_tmp="$(mktemp -d)"
+          unzip -q "$win_archive" -d "$win_tmp"
+          win_bin="$(find "$win_tmp" -type f -name gh-cicost.exe | head -n1)"
+          cp "$win_bin" "dist/gh-cicost_v${VERSION}_windows-amd64.exe"
+
+          ls -la dist
+
+      - name: Upsert release in gh-cicost
+        env:
+          GH_TOKEN: ${{ secrets.GH_CICOST_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          assets=(dist/checksums.txt dist/gh-cicost_*)
+
+          if gh release view "${TAG}" -R peter941221/gh-cicost >/dev/null 2>&1; then
+            gh release upload "${TAG}" -R peter941221/gh-cicost --clobber "${assets[@]}"
+          else
+            gh release create "${TAG}" \
+              -R peter941221/gh-cicost \
+              --title "${TAG}" \
+              --notes "GitHub CLI extension binaries for CICost ${TAG}" \
+              "${assets[@]}"
+          fi

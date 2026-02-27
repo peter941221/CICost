@@ -58,6 +58,7 @@ go run . org-report --repos repos.txt --days 30 --format md
 - GitHub CLI extension: `gh extension install peter941221/gh-cicost`
 - Homebrew: `Formula/cicost.rb`
 - Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`
+- Extension sync pipeline: `.github/workflows/sync-gh-extension.yml`
 - Release runbook: `docs/RELEASE.md`
 - Launch kit: `docs/LAUNCH.md`
 

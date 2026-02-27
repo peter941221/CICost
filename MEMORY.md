@@ -282,3 +282,28 @@
 - `rg -nP "[\\p{Han}]" -S .` ✅ (no matches)
 - `gh extension install peter941221/gh-cicost` ✅
 - `gh cicost version` ✅
+
+## 2026-02-27 (Homebrew + Extension Sync Automation)
+
+### Progress
+
+- Updated `Formula/cicost.rb` to release-ready state for `v0.2.0`:
+  - set formula `version` to `0.2.0`
+  - added `license "Apache-2.0"`
+  - replaced all placeholder `sha256` values with real checksums for macOS/Linux artifacts
+- Added automated extension mirroring workflow:
+  - new workflow `.github/workflows/sync-gh-extension.yml`
+  - trigger on `release: published` and manual `workflow_dispatch`
+  - downloads `gh-cicost_*` artifacts from `peter941221/CICost` release
+  - generates `gh`-recognized binary names (for direct extension resolution)
+  - upserts release assets into `peter941221/gh-cicost`
+- Updated docs to match the automation and release process:
+  - `README.md` now references extension sync pipeline
+  - `docs/RELEASE.md` now documents required secret `GH_CICOST_REPO_TOKEN` and sync workflow behavior
+
+### Validation
+
+- `go test ./...` ✅
+- `go vet ./...` ✅
+- `rg -n "REPLACE_WITH_REAL_SHA256|0.1.0" Formula/cicost.rb` ✅ (no matches)
+- workflow file review completed: `.github/workflows/sync-gh-extension.yml` ✅

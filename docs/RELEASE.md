@@ -4,7 +4,10 @@
 
 1. CI on `main` is green.
 2. `GITHUB_TOKEN` permission for release workflow is enabled (default repo token is enough).
-3. Optional: create tap repo `peter941221/homebrew-tap` for Homebrew distribution.
+3. Repository secret `GH_CICOST_REPO_TOKEN` is configured with access to:
+   - `peter941221/CICost` (read releases)
+   - `peter941221/gh-cicost` (create/upload releases)
+4. Optional: create tap repo `peter941221/homebrew-tap` for Homebrew distribution.
 
 ## Tag Release
 
@@ -31,6 +34,10 @@ and include `gh`-recognized binary names such as:
 - `gh-cicost_v0.2.0_linux-amd64`
 - `gh-cicost_v0.2.0_darwin-arm64`
 
+This mirroring is automated by:
+
+- `.github/workflows/sync-gh-extension.yml`
+
 ## Install Methods
 
 ### Standalone binary
@@ -51,7 +58,7 @@ gh cicost version
 ### Homebrew
 
 1. Copy `Formula/cicost.rb` to your tap repository.
-2. Replace `sha256` placeholders using `checksums.txt`.
+2. For each new release, update formula `version` and `sha256` values from `checksums.txt`.
 3. Publish formula:
 
 ```bash
