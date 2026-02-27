@@ -518,3 +518,23 @@
 
 - `git push origin main` ✅
 - remote update range: `f22eb2f..372057e` ✅
+
+## 2026-02-27 (GIF Cache-Bust Fix)
+
+### Progress
+
+- Diagnosed that GIF content changed in git history but user-facing view likely hit cached path.
+- Applied cache-bust strategy:
+  - changed demo output from `cicost-cli-demo.gif` to `cicost-cli-demo-v3.gif`
+  - updated README image reference to new filename
+  - removed old `docs/assets/cicost-cli-demo.gif`
+- Re-rendered headless demo GIF with existing 5-step no-error tape flow.
+
+### Validation
+
+- `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
+- file checks:
+  - `docs/assets/cicost-cli-demo-v3.gif` exists ✅
+  - old `docs/assets/cicost-cli-demo.gif` removed ✅
+- README reference check (`rg cicost-cli-demo`) ✅
+- `go test ./...` ✅

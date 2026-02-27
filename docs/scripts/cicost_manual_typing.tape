@@ -1,4 +1,4 @@
-Output docs/assets/cicost-cli-demo.gif
+Output docs/assets/cicost-cli-demo-v3.gif
 
 Set Shell "pwsh"
 Set FontSize 18
