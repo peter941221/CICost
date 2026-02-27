@@ -116,7 +116,7 @@ go build -o cicost .
 - Operations runbook: [RUNBOOK.md](RUNBOOK.md)
 - Release process: [docs/RELEASE.md](docs/RELEASE.md)
 - Launch kit: [docs/LAUNCH.md](docs/LAUNCH.md)
-- Demo recording script: `docs/scripts/record_cli_gif.ps1`
+- Demo recording script (headless): `docs/scripts/record_cli_gif_headless.ps1`
 - Technical specs: [TECHNICAL_SPEC_V1.md](TECHNICAL_SPEC_V1.md), [TECHNICAL_SPEC_V2.md](TECHNICAL_SPEC_V2.md)
 
 ## Community and Trust

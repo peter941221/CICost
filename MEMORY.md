@@ -412,3 +412,25 @@
 
 - `git push origin main` ✅
 - remote update range: `2f6b849..1b201f2` ✅
+
+## 2026-02-27 (Headless GIF Re-record)
+
+### Progress
+
+- Re-recorded CLI demo GIF with headless terminal rendering to avoid desktop interference.
+- Installed required tooling for headless flow:
+  - `vhs` (via `go install`)
+  - `ttyd` (via `scoop install ttyd`)
+- Added reusable tape-based recording assets:
+  - `docs/scripts/cicost_manual_typing.tape`
+  - `docs/scripts/record_cli_gif_headless.ps1`
+- Removed aborted desktop-injection attempt scripts:
+  - deleted `docs/scripts/manual_type_session.ps1`
+  - deleted `docs/scripts/record_cli_gif_manual.ps1`
+- Updated README demo script reference to the new headless recorder.
+
+### Validation
+
+- `vhs docs/scripts/cicost_manual_typing.tape` ✅
+- `docs/assets/cicost-cli-demo.gif` regenerated ✅
+- `go test ./...` ✅
