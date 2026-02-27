@@ -448,3 +448,23 @@
 
 - `git push origin main` ✅
 - remote update range: `3a3c0a2..16dfbd2` ✅
+
+## 2026-02-27 (No-Error Demo Re-record with Preflight)
+
+### Progress
+
+- Fixed demo reliability issue: removed error-prone `report --repo owner/repo` from tape.
+- Updated tape command sequence to offline-stable commands:
+  - `go build -o cicost.exe .`
+  - `.\cicost.exe version`
+  - `.\cicost.exe help`
+  - `.\cicost.exe policy explain`
+  - `.\cicost.exe config show`
+  - `.\cicost.exe policy lint --policy .cicost.policy.yml.example`
+- Re-rendered `docs/assets/cicost-cli-demo.gif` using headless `vhs`.
+
+### Validation
+
+- preflight command batch exit status: `ALL_OK` ✅
+- `vhs docs/scripts/cicost_manual_typing.tape` ✅
+- output refresh verified: `docs/assets/cicost-cli-demo.gif` timestamp updated ✅

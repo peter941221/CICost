@@ -28,6 +28,10 @@ Type ".\\cicost.exe policy explain"
 Enter
 Sleep 1500ms
 
-Type ".\\cicost.exe report --repo owner/repo --days 7 --format table"
+Type ".\\cicost.exe config show"
+Enter
+Sleep 1500ms
+
+Type ".\\cicost.exe policy lint --policy .cicost.policy.yml.example"
 Enter
 Sleep 1800ms
