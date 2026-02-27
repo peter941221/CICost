@@ -434,3 +434,17 @@
 - `vhs docs/scripts/cicost_manual_typing.tape` ✅
 - `docs/assets/cicost-cli-demo.gif` regenerated ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (Headless GIF Pipeline Pushed)
+
+### Progress
+
+- Committed headless GIF pipeline rollout:
+  - commit: `16dfbd2`
+  - message: `docs: switch CLI demo to headless manual-typing gif pipeline`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `3a3c0a2..16dfbd2` ✅
