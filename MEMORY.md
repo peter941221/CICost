@@ -398,3 +398,17 @@
 - `powershell -File docs/scripts/record_cli_gif.ps1` ✅
 - generated file check: `docs/assets/cicost-cli-demo.gif` ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (README GIF Update Pushed)
+
+### Progress
+
+- Committed documentation/demo updates with:
+  - commit: `1b201f2`
+  - message: `docs: add CLI demo gif and README improvements`
+- Pushed commit to remote `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `2f6b849..1b201f2` ✅
