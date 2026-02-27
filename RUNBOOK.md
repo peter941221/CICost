@@ -2,7 +2,7 @@
 
 ## Environment Setup
 
-1. Install Go 1.23+ (required).
+1. Install Go 1.24+ (required, CI validated on Go 1.26.x).
 2. Install GitHub CLI (`gh`) and login:
 
 ```powershell

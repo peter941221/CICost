@@ -11,8 +11,8 @@
 ```bash
 git checkout main
 git pull
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 Release workflow (`.github/workflows/release.yml`) will run GoReleaser and publish:
@@ -57,4 +57,3 @@ go test -race ./...
 go vet ./...
 goreleaser check
 ```
-
