@@ -10,8 +10,11 @@ Set-Location (Resolve-Path (Join-Path $PSScriptRoot "..\.."))
 $tempMp4 = "docs/assets/_cicost-cli-demo-v7-sub.mp4"
 $palette = "docs/assets/_cicost-cli-demo-v7-palette.png"
 
-$style = "FontName=Arial,FontSize=20,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BackColour=&H80000000,BorderStyle=3,MarginV=22"
-$subFilter = "subtitles='$SubtitleFile':force_style='$style'"
+# ffmpeg subtitles filter is sensitive to Windows absolute-drive path escaping.
+# Prefer a project-relative forward-slash path (for example: docs/scripts/demo.srt).
+$subPath = $SubtitleFile.Replace("\", "/")
+$subPath = $subPath.TrimStart(".", "/")
+$subFilter = "subtitles=$subPath"
 
 ffmpeg -hide_banner -y -i $InputGif -vf $subFilter $tempMp4 | Out-Null
 ffmpeg -hide_banner -y -i $tempMp4 -vf "fps=15,scale=1100:-1:flags=lanczos,palettegen" $palette | Out-Null

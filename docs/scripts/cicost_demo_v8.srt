@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:04,500
+Track CI cost in 30 seconds.
+
+2
+00:00:04,500 --> 00:00:10,500
+Scan recent GitHub Actions runs.
+
+3
+00:00:10,500 --> 00:00:17,500
+See total runs and estimated cost.
+
+4
+00:00:17,500 --> 00:00:25,000
+Find top expensive workflows fast.
+
+5
+00:00:25,000 --> 00:00:32,000
+Run policy checks for guardrails.
+
+6
+00:00:32,000 --> 00:00:36,700
+Tune thresholds for your team.

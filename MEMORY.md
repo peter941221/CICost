@@ -728,3 +728,26 @@
 
 - `git push origin main` ✅
 - remote update range: `909916e..993c612` ✅
+
+## 2026-02-27 (GIF v8 - Short English Subtitle Narration)
+
+### Progress
+
+- Produced a shorter subtitle narration variant (`v8`) with compact English captions.
+- Added subtitle file:
+  - `docs/scripts/cicost_demo_v8.srt`
+- Generated new GIF:
+  - `docs/assets/cicost-cli-demo-v8.gif`
+- Uploaded v8 GIF to release `v0.2.0`.
+- Updated README static GIF URL to v8 release asset.
+- Removed local v7 GIF from repo tree to keep a single canonical local demo artifact.
+- Fixed subtitle renderer script path handling so it works with project-relative `.srt` inputs:
+  - updated `docs/scripts/render_subtitled_gif_v7.ps1`
+
+### Validation
+
+- `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v8.gif --clobber` ✅
+- release asset list contains `cicost-cli-demo-v8.gif` ✅
+- README reference check (`rg cicost-cli-demo-v8.gif`) ✅
+- subtitle script smoke run with v8 inputs ✅
+- `go test ./...` ✅
