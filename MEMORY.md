@@ -311,3 +311,31 @@
 - workflow dispatch test:
   - first run failed due missing token (`run_id=22469418997`) ❌
   - rerun passed after secret setup (`run_id=22469443908`) ✅
+
+## 2026-02-27 (User Acquisition Target Search + Outreach Preparation)
+
+### Progress
+
+- Searched GitHub for active repositories related to GitHub Actions and CI tooling.
+- Curated a high-fit outreach shortlist with owner type, recency, and channel readiness:
+  - `rhysd/actionlint`
+  - `zizmorcore/zizmor`
+  - `actions/actions-runner-controller`
+  - `github-aws-runners/terraform-aws-github-runner`
+  - `dorny/paths-filter`
+  - `tj-actions/changed-files`
+  - `softprops/action-gh-release`
+  - `JamesIves/github-pages-deploy-action`
+  - `shivammathur/setup-php`
+  - `docker/build-push-action`
+  - plus additional secondary targets (SamKirkland, mxschmitt, gradle, pulumi, goreleaser)
+- Prepared practical outreach structure:
+  - channel selection logic (discussion > issue > DM)
+  - 7-day execution cadence
+  - copy-ready outreach message templates
+
+### Validation
+
+- `gh search repos "topic:github-actions stars:50..5000 pushed:>=2025-12-01 archived:false"` ✅
+- repository metadata verification via `gh api repos/<owner>/<repo>` ✅
+- fields verified: `pushed_at`, `owner.type`, `has_discussions`, `has_issues`, `open_issues_count` ✅
