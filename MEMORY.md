@@ -504,3 +504,17 @@
 - preflight command batch (`version/help/config/lint/explain`) => `ALL_OK` ✅
 - `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF Clarity Fix Pushed)
+
+### Progress
+
+- Committed GIF clarity and reliability improvements:
+  - commit: `372057e`
+  - message: `docs: clarify CLI demo and re-record headless gif`
+- Pushed commit to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `f22eb2f..372057e` ✅
