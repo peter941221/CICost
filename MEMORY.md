@@ -355,3 +355,46 @@
 
 - Source of truth: user confirmation in-session ("already sent").
 - Note: send actions were performed by user side and were not programmatically verified from this environment.
+
+## 2026-02-27 (Memory Restore + README Optimization)
+
+### Progress
+
+- Restored project context from `MEMORY.md`, `RUNBOOK.md`, and command source files under `cmd/`.
+- Reworked `README.md` into a release-facing structure:
+  - added CI/release/license/Go badges
+  - clarified value proposition and current capability (v0.2.0)
+  - upgraded architecture section with clearer end-to-end data flow
+  - added quick-start flow with verified command set
+  - added command map table with key flags
+  - documented CI-relevant exit codes (`0/1/2/3`)
+  - consolidated docs/community/trust entry points
+- Kept distribution paths aligned with current automation:
+  - release workflow
+  - GoReleaser config
+  - extension sync workflow
+
+### Validation
+
+- `go run . version` ✅
+- `go run . help` ✅
+- link presence check in README (`rg` + `Test-Path`) ✅
+- `go test ./...` ✅
+
+## 2026-02-27 (CLI GIF Recording + README Embed)
+
+### Progress
+
+- Added reproducible CLI demo scripts:
+  - `docs/scripts/demo_session.ps1` (plays command sequence for recording)
+  - `docs/scripts/record_cli_gif.ps1` (build + record + encode gif)
+- Recorded a real desktop CLI session with `ffmpeg` and generated:
+  - `docs/assets/cicost-cli-demo.gif`
+- Embedded GIF in `README.md` under `CLI Demo (GIF)` section.
+- Added script reference in README documentation list for future re-recording.
+
+### Validation
+
+- `powershell -File docs/scripts/record_cli_gif.ps1` ✅
+- generated file check: `docs/assets/cicost-cli-demo.gif` ✅
+- `go test ./...` ✅

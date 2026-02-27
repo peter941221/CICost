@@ -1,93 +1,146 @@
 # CICost
 
-GitHub Actions cost analysis and governance CLI.
+GitHub Actions cost, waste, and policy governance CLI for engineers and FinOps teams.
 
-## Status (2026-02-27)
+[![CI](https://github.com/peter941221/CICost/actions/workflows/ci.yml/badge.svg)](https://github.com/peter941221/CICost/actions/workflows/ci.yml)
+[![Release](https://github.com/peter941221/CICost/actions/workflows/release.yml/badge.svg)](https://github.com/peter941221/CICost/actions/workflows/release.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Go](https://img.shields.io/badge/go-1.24%2B-00ADD8?logo=go)](go.mod)
 
-- [x] Pricing v2: SKU-based pricing + `effective_from` snapshots
-- [x] Reconcile: estimate vs actual billing with calibration factor
-- [x] Policy Gate: `policy lint/check/explain` + `error => exit code 3`
-- [x] Suggest: actionable optimization output (`text|yaml` + patch export)
-- [x] Org Report: multi-repo aggregation with partial-result support
-- [x] Quality gate: `go test ./...` / `go test -race ./...` / `go vet ./...`
+## CLI Demo (GIF)
 
-## Architecture
+![CICost CLI Demo](docs/assets/cicost-cli-demo.gif)
+
+## Why CICost
+
+- Turn GitHub Actions usage into cost in USD using pricing snapshots.
+- Reconcile estimate vs actual billing and persist calibration factor.
+- Enforce cost guardrails with policy checks in CI.
+- Generate data-backed optimization suggestions (with patch snippets).
+- Aggregate multi-repo visibility for org-level decisions.
+
+## Current Capability (v0.2.0)
+
+- [x] Pricing v2 (`pricing_snapshots`, `effective_from`, legacy fallback)
+- [x] Reconcile (`--actual-usd`, CSV import, optional calibration apply)
+- [x] Policy Gate (`policy lint/check/explain`, error rule => exit code `3`)
+- [x] Suggestion Engine (`text|yaml`, patch artifact export)
+- [x] Org Report (parallel multi-repo aggregation, partial-failure support)
+- [x] Quality gates (`go test ./...`, `go test -race ./...`, `go vet ./...`)
+
+## How It Works
 
 ```text
-User / CI
-   |
-   v
-Commands: scan/report/reconcile/policy/suggest/org-report
-   |
-   +--> Config/Auth
-   +--> GitHub Data Ingestion
-   +--> SQLite Store (runs/jobs/billing/reconcile/policy/suggest)
-   +--> Analytics + Policy Engine
-   +--> Output (table/md/json/csv/yaml)
+GitHub Actions API / CSV Billing
+            |
+            v
+      [cicost scan]
+            |
+            v
+   SQLite Local Store (runs/jobs + v2 tables)
+            |
+            +-------------------+
+            |                   |
+            v                   v
+ [report/hotspots/budget]   [reconcile/policy/suggest/org-report]
+            |                   |
+            +---------+---------+
+                      |
+                      v
+          table / md / json / csv / yaml
 ```
 
 ## Quick Start
 
-1. Install Go 1.24+ (CI validated on Go 1.26.x)
-2. Authenticate (one option):
-   - `gh auth login`
-   - `set GITHUB_TOKEN=ghp_xxx` (Windows)
-3. Run the core flow:
+1. Prerequisites:
+   - Go `1.24+` (CI validated on `1.26.x`)
+   - GitHub auth via `gh auth login` or `GITHUB_TOKEN`
+2. Build and verify:
 
 ```bash
-go run . scan --repo owner/repo --days 30
-go run . report --repo owner/repo --format table
-go run . reconcile --repo owner/repo --month 2026-02 --actual-usd 123.45 --apply-calibration
-go run . report --repo owner/repo --calibrated --format json
-go run . policy lint --policy .cicost.policy.yml
-go run . policy check --repo owner/repo --days 30
-go run . suggest --repo owner/repo --format yaml --output patches/
-go run . org-report --repos repos.txt --days 30 --format md
+go build -o cicost .
+./cicost version
 ```
 
-## Config
+3. Run the core workflow:
 
-- User-level: `~/.cicost/config.yml`
-- Repo-level: `.cicost.yml`
-- Policy file: `.cicost.policy.yml` (example: `.cicost.policy.yml.example`)
-- Pricing file: `configs/pricing_default.yml` (supports `pricing_snapshots`)
+```bash
+./cicost scan --repo owner/repo --days 30
+./cicost report --repo owner/repo --format table
+./cicost reconcile --repo owner/repo --month 2026-02 --actual-usd 123.45 --apply-calibration
+./cicost report --repo owner/repo --calibrated --format json
+./cicost policy lint --policy .cicost.policy.yml
+./cicost policy check --repo owner/repo --days 30
+./cicost suggest --repo owner/repo --format yaml --output patches/
+./cicost org-report --repos repos.txt --days 30 --format md
+```
 
-## Distribution
+## Command Map
 
-- Standalone binary: GitHub Releases artifacts (`cicost_*`)
+| Command | Purpose | Key Flags |
+|---|---|---|
+| `scan` | Fetch workflow runs/jobs into local SQLite cache | `--repo --days --incremental --full --workers` |
+| `report` | Cost + waste report with optional calibration | `--repo --days --format --compare --calibrated` |
+| `hotspots` | Rank expensive workflows/jobs/runners/branches | `--group-by --top --sort --format` |
+| `budget` | Weekly/monthly budget check and alerting | `--monthly --weekly --notify --webhook-url` |
+| `reconcile` | Estimate vs actual billing reconciliation | `--month --source --input --actual-usd --apply-calibration` |
+| `policy` | Governance checks (`lint/check/explain`) | `policy check --repo --days --policy` |
+| `suggest` | Data-backed optimization suggestions | `--repo --days --format --output` |
+| `org-report` | Multi-repo aggregate report | `--repos --days --format --output` |
+
+## Config and Files
+
+- User config: `~/.cicost/config.yml`
+- Repo config: `.cicost.yml`
+- Policy rules: `.cicost.policy.yml` (sample: `.cicost.policy.yml.example`)
+- Pricing defaults: `configs/pricing_default.yml`
+- Local data store: platform-specific path resolved by `internal/config`
+
+## Exit Codes (for CI Integration)
+
+- `0`: success
+- `1`: generic error
+- `2`: budget warning/exceeded
+- `3`: policy error rules matched
+
+## Install and Distribution
+
+- Standalone binaries: GitHub Releases (`cicost_*`, checksums included)
 - GitHub CLI extension: `gh extension install peter941221/gh-cicost`
-- Homebrew: `Formula/cicost.rb`
-- Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`
-- Extension sync pipeline: `.github/workflows/sync-gh-extension.yml`
-- Release runbook: `docs/RELEASE.md`
-- Launch kit: `docs/LAUNCH.md`
+- Homebrew formula template: `Formula/cicost.rb`
+- Release automation: `.github/workflows/release.yml` + `.goreleaser.yml`
+- Extension sync automation: `.github/workflows/sync-gh-extension.yml`
 
-## License
+## Documentation
 
-Apache-2.0. See `LICENSE`.
+- Operations runbook: [RUNBOOK.md](RUNBOOK.md)
+- Release process: [docs/RELEASE.md](docs/RELEASE.md)
+- Launch kit: [docs/LAUNCH.md](docs/LAUNCH.md)
+- Demo recording script: `docs/scripts/record_cli_gif.ps1`
+- Technical specs: [TECHNICAL_SPEC_V1.md](TECHNICAL_SPEC_V1.md), [TECHNICAL_SPEC_V2.md](TECHNICAL_SPEC_V2.md)
 
-## Community
+## Community and Trust
 
-- Contribution guide: `CONTRIBUTING.md`
-- Code of conduct: `CODE_OF_CONDUCT.md`
-- Security policy: `SECURITY.md`
+- Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- Security policy: [SECURITY.md](SECURITY.md)
+- License: Apache-2.0 ([LICENSE](LICENSE))
 
 ## Project Layout
 
 ```text
 CICost/
-├── cmd/                     # CLI commands
+├── cmd/                     # CLI command entrypoints
 ├── internal/
-│   ├── analytics/           # cost/waste/hotspot/budget
+│   ├── analytics/           # cost/waste/hotspot/budget logic
 │   ├── billing/             # billing import adapters
-│   ├── policy/              # policy parser + evaluator
-│   ├── pricing/             # pricing snapshots + resolver
+│   ├── policy/              # policy parser/evaluator
+│   ├── pricing/             # snapshot loader + resolver
 │   ├── reconcile/           # estimate-vs-actual calibration
-│   ├── suggest/             # actionable patch suggestions
-│   └── store/               # SQLite schema v2 + access layer
-├── configs/
-├── TECHNICAL_SPEC_V1.md
-├── TECHNICAL_SPEC_V2.md
-├── MEMORY.md
-└── RUNBOOK.md
+│   ├── suggest/             # recommendation generation
+│   └── store/               # SQLite schema + access layer
+├── configs/                 # default pricing/config examples
+├── docs/                    # release + launch docs
+├── MEMORY.md                # project memory log
+└── RUNBOOK.md               # operational commands
 ```
