@@ -1,4 +1,4 @@
-Output docs/assets/cicost-cli-demo-v3.gif
+Output docs/assets/cicost-cli-demo-v4.gif
 
 Set Shell "pwsh"
 Set FontSize 18
@@ -12,7 +12,7 @@ Type "cd 'C:\\AI Projects\\Fun Stuff\\IndieHacker\\CICost'"
 Enter
 Sleep 300ms
 
-Type "Write-Host '[1/5] CLI version' -ForegroundColor Yellow"
+Type "echo 'Demo: cicost version'"
 Enter
 Sleep 300ms
 
@@ -20,34 +20,34 @@ Type ".\\cicost.exe version"
 Enter
 Sleep 900ms
 
-Type "Write-Host '[2/5] Command overview (help)' -ForegroundColor Yellow"
+Type "echo 'Demo: cicost help'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe help | Select-Object -First 14"
+Type ".\\cicost.exe help"
 Enter
 Sleep 900ms
 
-Type "Write-Host '[3/5] Effective merged config (config show)' -ForegroundColor Yellow"
-Enter
-Sleep 300ms
-
-Type ".\\cicost.exe config show | Select-Object -First 20"
-Enter
-Sleep 1000ms
-
-Type "Write-Host '[4/5] Policy file lint' -ForegroundColor Yellow"
+Type "echo 'Demo: policy lint'"
 Enter
 Sleep 300ms
 
 Type ".\\cicost.exe policy lint --policy .cicost.policy.yml.example"
 Enter
-Sleep 900ms
+Sleep 1000ms
 
-Type "Write-Host '[5/5] Policy expression reference' -ForegroundColor Yellow"
+Type "echo 'Demo: policy explain'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe policy explain | Select-Object -First 16"
+Type ".\\cicost.exe policy explain"
+Enter
+Sleep 900ms
+
+Type "echo 'Demo: merged config'"
+Enter
+Sleep 300ms
+
+Type ".\\cicost.exe config show"
 Enter
 Sleep 1200ms

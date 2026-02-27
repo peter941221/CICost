@@ -552,3 +552,25 @@
 
 - `git push origin main` ✅
 - remote update range: `c42987c..7b05caa` ✅
+
+## 2026-02-27 (GIF Noise Cleanup - Remove Yellow/Extra Digits)
+
+### Progress
+
+- Reworked demo tape to remove confusing display artifacts:
+  - removed `Write-Host ... -ForegroundColor Yellow`
+  - removed `Select-Object -First <n>` clipping commands
+  - simplified to plain `echo` labels + direct CLI commands
+- Switched demo asset to `docs/assets/cicost-cli-demo-v4.gif`.
+- Updated README image reference to `cicost-cli-demo-v4.gif` and aligned demo bullet list.
+- Removed previous v3 asset from `docs/assets`.
+
+### Validation
+
+- preflight command batch (`version/help/policy lint/policy explain/config show`) => `ALL_OK` ✅
+- `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
+- asset checks:
+  - `docs/assets/cicost-cli-demo-v4.gif` exists ✅
+  - `docs/assets/cicost-cli-demo-v3.gif` removed ✅
+- README reference check (`rg cicost-cli-demo-v`) ✅
+- `go test ./...` ✅
