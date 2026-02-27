@@ -232,3 +232,28 @@
 - Created local release tag `v0.2.0` on commit `3269de2`.
 - Re-ran `go test ./...` after commits/tag: ✅
 - Pushed `main` and `v0.2.0` to remote `origin`.
+
+## 2026-02-27 (Install Matrix Smoke Validation)
+
+### Progress
+
+- Ran distribution install smoke checks after `v0.2.0` release publish.
+- Verified standalone Windows binary path end-to-end:
+  - download release zip
+  - verify checksum from `checksums.txt`
+  - extract and execute `cicost.exe version`
+- Verified GitHub CLI extension install path:
+  - `gh extension install peter941221/CICost` currently fails because extension repo naming must start with `gh-`.
+  - URL-based install fallback also fails with the same naming rule.
+- Verified Homebrew path readiness signal:
+  - Homebrew unavailable in this Windows environment (`brew` command missing).
+  - `Formula/cicost.rb` still contains template placeholders and outdated `version "0.1.0"`.
+
+### Validation
+
+- `gh --version` ✅ (`2.86.0`)
+- `gh auth status` ✅ (authenticated as `peter941221`)
+- standalone binary checksum compare ✅
+- standalone binary run ✅ (`cicost 0.2.0`)
+- `gh extension install peter941221/CICost` ❌ (repo name rule)
+- `gh extension install https://github.com/peter941221/CICost` ❌ (repo name rule)
