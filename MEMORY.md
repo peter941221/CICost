@@ -468,3 +468,17 @@
 - preflight command batch exit status: `ALL_OK` ✅
 - `vhs docs/scripts/cicost_manual_typing.tape` ✅
 - output refresh verified: `docs/assets/cicost-cli-demo.gif` timestamp updated ✅
+
+## 2026-02-27 (No-Error Demo Push)
+
+### Progress
+
+- Committed preflight + no-error GIF re-record updates:
+  - commit: `1af1392`
+  - message: `docs: preflight demo commands and re-record error-free gif`
+- Pushed commit to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `e52d1f2..1af1392` ✅
