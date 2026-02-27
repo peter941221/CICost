@@ -644,3 +644,17 @@
 - `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v5.gif --clobber` ✅
 - `gh release view v0.2.0 --json assets` (v5 asset listed) ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (Readable 30s Demo GIF Push)
+
+### Progress
+
+- Committed readable demo redesign:
+  - commit: `b046b92`
+  - message: `docs: redesign demo gif into readable 30s story`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `57b46c2..b046b92` ✅
