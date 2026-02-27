@@ -765,3 +765,49 @@
 
 - `git push origin main` ✅
 - remote update range: `bcb8d32..b19ef79` ✅
+
+## 2026-02-27 (README Visual Readability + Art Direction Upgrade)
+
+### Progress
+
+- Reworked README information architecture for stronger first-screen clarity and flow:
+  - stronger hero value statement
+  - cleaner `About` with explicit problem framing
+  - improved demo framing and summary bullets
+  - added "Why Teams Use CICost" value table
+  - added simplified "30-Second Flow" ASCII map
+  - reorganized quick start into core and optional advanced flows
+  - refreshed command map labels and overall section sequencing
+- Improved visual readability:
+  - shorter paragraphs
+  - consistent heading rhythm
+  - tighter wording and reduced cognitive load
+- Preserved technical correctness:
+  - kept release-hosted v8 demo URL
+  - retained existing command set and distribution references
+
+### Validation
+
+- README structure checks (`rg` section headers) ✅
+- README key reference checks (v8 GIF + scripts) ✅
+- `go test ./...` ✅
+
+## 2026-02-27 (Working Preference - Auto Push)
+
+### Preference
+
+- User preference confirmed: auto `commit + push` after completed changes by default.
+- Exception: if user explicitly says not to push for a specific task.
+
+## 2026-02-27 (README About Section)
+
+### Progress
+
+- Added a dedicated `About` section to `README.md`.
+- Added a copy-paste ready GitHub repository About template:
+  - description line
+  - recommended topics list
+
+### Validation
+
+- README section presence check (`rg "^## About|^### GitHub Repository About" README.md`) ✅
