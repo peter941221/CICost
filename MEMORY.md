@@ -574,3 +574,17 @@
   - `docs/assets/cicost-cli-demo-v3.gif` removed ✅
 - README reference check (`rg cicost-cli-demo-v`) ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF Noise Cleanup Push)
+
+### Progress
+
+- Committed simplified demo GIF flow:
+  - commit: `69710e3`
+  - message: `docs: simplify demo gif output and remove confusing labels`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `815e8d3..69710e3` ✅
