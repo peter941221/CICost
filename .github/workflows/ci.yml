@@ -30,6 +30,29 @@ jobs:
       - name: Build
         run: go build ./...
 
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+
+      - name: Test (coverage profile)
+        run: go test -coverprofile=coverage.out ./...
+
+      - name: Coverage Summary
+        run: go tool cover -func=coverage.out
+
+      - name: Upload Coverage Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage.out
+          path: coverage.out
+
   cross-build:
     runs-on: ubuntu-latest
     steps:
@@ -55,4 +78,3 @@ jobs:
 
       - name: Build windows amd64
         run: GOOS=windows GOARCH=amd64 go build -o dist/cicost_windows_amd64.exe .
-
