@@ -714,3 +714,17 @@
 - release asset listing includes `cicost-cli-demo-v7.gif` ✅
 - README reference check (`rg cicost-cli-demo-v7.gif`) ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF v7 Subtitle Push)
+
+### Progress
+
+- Committed English subtitle narration rollout:
+  - commit: `993c612`
+  - message: `docs: add English subtitle narration to CLI demo gif`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `909916e..993c612` ✅
