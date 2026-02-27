@@ -658,3 +658,22 @@
 
 - `git push origin main` ✅
 - remote update range: `57b46c2..b046b92` ✅
+
+## 2026-02-27 (GIF v6 - Remove Unintended Number Highlight Feel)
+
+### Progress
+
+- Addressed feedback that some numbers looked highlighted/noisy in demo.
+- Switched VHS shell from `pwsh` to `cmd` to reduce syntax-coloring artifacts.
+- Removed numeric-style step labels from tape flow and kept plain text section cues.
+- Generated new demo asset:
+  - `docs/assets/cicost-cli-demo-v6.gif`
+- Uploaded v6 to release `v0.2.0` and updated README static image link to v6.
+- Removed local v5 asset from repository tree to keep one canonical local demo file.
+
+### Validation
+
+- preflight command batch (`scan/report/hotspots/policy`) ✅
+- `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
+- `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v6.gif --clobber` ✅
+- `go test ./...` ✅
