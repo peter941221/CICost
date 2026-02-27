@@ -691,3 +691,26 @@
 
 - `git push origin main` ✅
 - remote update range: `661a3e8..bd004fe` ✅
+
+## 2026-02-27 (GIF v7 - English Subtitle Narration)
+
+### Progress
+
+- Added English subtitle narration to improve demo comprehension.
+- Added subtitle timeline file:
+  - `docs/scripts/cicost_demo_v7.srt`
+- Added rendering script for subtitle overlay pipeline:
+  - `docs/scripts/render_subtitled_gif_v7.ps1`
+- Generated new subtitled asset:
+  - `docs/assets/cicost-cli-demo-v7.gif`
+- Uploaded v7 asset to release `v0.2.0`.
+- Updated README static image URL to release-hosted v7 GIF.
+- Removed local v6 GIF from repo tree to keep one canonical local demo asset.
+
+### Validation
+
+- `powershell -File docs/scripts/render_subtitled_gif_v7.ps1` ✅
+- `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v7.gif --clobber` ✅
+- release asset listing includes `cicost-cli-demo-v7.gif` ✅
+- README reference check (`rg cicost-cli-demo-v7.gif`) ✅
+- `go test ./...` ✅

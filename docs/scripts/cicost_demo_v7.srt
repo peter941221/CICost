@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:05,000
+Goal: Identify CI cost hotspots in 30 seconds.
+
+2
+00:00:05,000 --> 00:00:12,000
+Step 1: Scan recent GitHub Actions workflow runs.
+
+3
+00:00:12,000 --> 00:00:19,000
+Step 2: Review cost summary and free-tier usage.
+
+4
+00:00:19,000 --> 00:00:27,000
+Step 3: Find the top expensive workflows.
+
+5
+00:00:27,000 --> 00:00:33,000
+Step 4: Run policy checks for cost guardrails.
+
+6
+00:00:33,000 --> 00:00:36,700
+Next: tune thresholds for your team and CI budget.
