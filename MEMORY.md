@@ -588,3 +588,20 @@
 
 - `git push origin main` ✅
 - remote update range: `815e8d3..69710e3` ✅
+
+## 2026-02-27 (Release-Hosted Static GIF Link)
+
+### Progress
+
+- Uploaded demo GIF asset to GitHub release `v0.2.0`:
+  - asset: `cicost-cli-demo-v4.gif`
+- Updated README image source from repo-relative path to release static URL:
+  - `https://github.com/peter941221/CICost/releases/download/v0.2.0/cicost-cli-demo-v4.gif`
+- Goal: bypass repository-page image caching and provide stable CDN-backed rendering.
+
+### Validation
+
+- `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v4.gif -R peter941221/CICost --clobber` ✅
+- `gh release view v0.2.0 --json tagName,assets` (asset presence confirmed) ✅
+- README reference check (`rg releases/download/v0.2.0`) ✅
+- `go test ./...` ✅

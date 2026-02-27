@@ -9,7 +9,7 @@ GitHub Actions cost, waste, and policy governance CLI for engineers and FinOps t
 
 ## CLI Demo (GIF)
 
-![CICost CLI Demo](docs/assets/cicost-cli-demo-v4.gif)
+![CICost CLI Demo](https://github.com/peter941221/CICost/releases/download/v0.2.0/cicost-cli-demo-v4.gif)
 
 This GIF shows a no-network, no-error walkthrough:
 - `cicost version`
