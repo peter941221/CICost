@@ -9,14 +9,14 @@ GitHub Actions cost, waste, and policy governance CLI for engineers and FinOps t
 
 ## CLI Demo (GIF)
 
-![CICost CLI Demo](https://github.com/peter941221/CICost/releases/download/v0.2.0/cicost-cli-demo-v4.gif)
+![CICost CLI Demo](https://github.com/peter941221/CICost/releases/download/v0.2.0/cicost-cli-demo-v5.gif)
 
-This GIF shows a no-network, no-error walkthrough:
-- `cicost version`
-- `cicost help`
-- `cicost policy lint --policy .cicost.policy.yml.example`
-- `cicost policy explain`
-- `cicost config show`
+This GIF shows a quick end-to-end walkthrough:
+- `scan` recent workflow data
+- `report` key cost summary lines
+- `hotspots` top expensive workflows
+- `policy check` gate result
+- one-line next action
 
 ## Why CICost
 

@@ -619,3 +619,28 @@
 
 - `git push origin main` ✅
 - remote update range: `b09a56b..01dfd6b` ✅
+
+## 2026-02-27 (Readable 30s Demo GIF v5)
+
+### Progress
+
+- Redesigned demo narrative to improve comprehension:
+  - goal line first
+  - 4-step flow (`scan` -> `report summary` -> `hotspots` -> `policy check`)
+  - closing next-action line
+- Removed confusing visual noise from previous versions:
+  - no `-ForegroundColor Yellow`
+  - no `Select-Object -First <n>` clipping artifacts in prompt labels
+- Generated new asset:
+  - `docs/assets/cicost-cli-demo-v5.gif`
+- Updated README static image link to release-hosted v5 URL.
+- Uploaded v5 GIF asset to release `v0.2.0`.
+- Removed v4 GIF from repository working tree to keep a single canonical local demo asset.
+
+### Validation
+
+- Preflight command batch (`scan/report/hotspots/policy`) => `ALL_OK` ✅
+- `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
+- `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v5.gif --clobber` ✅
+- `gh release view v0.2.0 --json assets` (v5 asset listed) ✅
+- `go test ./...` ✅

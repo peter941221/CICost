@@ -1,4 +1,4 @@
-Output docs/assets/cicost-cli-demo-v4.gif
+Output docs/assets/cicost-cli-demo-v5.gif
 
 Set Shell "pwsh"
 Set FontSize 18
@@ -12,42 +12,42 @@ Type "cd 'C:\\AI Projects\\Fun Stuff\\IndieHacker\\CICost'"
 Enter
 Sleep 300ms
 
-Type "echo 'Demo: cicost version'"
+Type "echo 'Goal: identify CI cost hotspots in 30 seconds'"
+Enter
+Sleep 600ms
+
+Type "echo '[1/4] Scan latest workflow data'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe version"
+Type ".\\cicost.exe scan --repo cli/cli --days 3 --workers 4"
 Enter
-Sleep 900ms
+Sleep 1200ms
 
-Type "echo 'Demo: cicost help'"
-Enter
-Sleep 300ms
-
-Type ".\\cicost.exe help"
-Enter
-Sleep 900ms
-
-Type "echo 'Demo: policy lint'"
+Type "echo '[2/4] Cost summary'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe policy lint --policy .cicost.policy.yml.example"
+Type ".\\cicost.exe report --repo cli/cli --days 3 --format table | Select-String 'Total Runs|Estimated Cost|Free Tier Used|Data completeness' | ForEach-Object { $_.Line }"
 Enter
 Sleep 1000ms
 
-Type "echo 'Demo: policy explain'"
+Type "echo '[3/4] Top expensive workflows'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe policy explain"
+Type ".\\cicost.exe hotspots --repo cli/cli --days 3 --group-by workflow --top 3 --sort cost --format table"
 Enter
 Sleep 900ms
 
-Type "echo 'Demo: merged config'"
+Type "echo '[4/4] Policy gate result'"
 Enter
 Sleep 300ms
 
-Type ".\\cicost.exe config show"
+Type ".\\cicost.exe policy check --repo cli/cli --days 3 --policy .cicost.policy.yml.example"
+Enter
+Sleep 800ms
+
+Type "echo 'Next step: tune policy thresholds for your repo/team'"
 Enter
 Sleep 1200ms
