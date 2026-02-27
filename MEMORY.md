@@ -605,3 +605,17 @@
 - `gh release view v0.2.0 --json tagName,assets` (asset presence confirmed) ✅
 - README reference check (`rg releases/download/v0.2.0`) ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (Release-Hosted GIF Link Push)
+
+### Progress
+
+- Committed release-hosted GIF link update:
+  - commit: `01dfd6b`
+  - message: `docs: switch demo GIF to release-hosted static URL`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `b09a56b..01dfd6b` ✅
