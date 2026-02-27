@@ -46,10 +46,10 @@ func runOrgReport(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("org-report", flag.ContinueOnError)
-	reposFlag := fs.String("repos", "", "仓库列表文件（每行一个 owner/repo）")
-	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "时间窗口天数")
-	formatFlag := fs.String("format", "md", "输出格式 md|json")
-	outputFlag := fs.String("output", "", "输出文件")
+	reposFlag := fs.String("repos", "", "Repository list file (one owner/repo per line)")
+	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "Time window in days")
+	formatFlag := fs.String("format", "md", "Output format: md|json")
+	outputFlag := fs.String("output", "", "Output file path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

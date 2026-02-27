@@ -20,12 +20,12 @@ func runReconcile(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("reconcile", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	monthFlag := fs.String("month", time.Now().UTC().Format("2006-01"), "月份，格式 YYYY-MM")
-	sourceFlag := fs.String("source", "csv", "账单来源 csv|github")
-	inputFlag := fs.String("input", "", "账单 CSV 文件（repo,period,actual_cost_usd）")
-	actualFlag := fs.Float64("actual-usd", 0, "实际账单金额，优先级高于 --input")
-	applyFlag := fs.Bool("apply-calibration", false, "将校准系数应用到后续 --calibrated 报告")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	monthFlag := fs.String("month", time.Now().UTC().Format("2006-01"), "Month in YYYY-MM format")
+	sourceFlag := fs.String("source", "csv", "Billing source: csv|github")
+	inputFlag := fs.String("input", "", "Billing CSV file (repo,period,actual_cost_usd)")
+	actualFlag := fs.Float64("actual-usd", 0, "Actual billed amount (overrides --input)")
+	applyFlag := fs.Bool("apply-calibration", false, "Apply calibration factor to future --calibrated reports")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

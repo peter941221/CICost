@@ -19,12 +19,12 @@ func runReport(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("report", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "时间窗口天数")
-	formatFlag := fs.String("format", rt.cfg.Output.Format, "输出格式 table|md|json|csv")
-	outputFlag := fs.String("output", "", "输出文件")
-	compareFlag := fs.Bool("compare", false, "与上一周期对比")
-	calibratedFlag := fs.Bool("calibrated", false, "使用最近对账结果进行校准")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "Time window in days")
+	formatFlag := fs.String("format", rt.cfg.Output.Format, "Output format: table|md|json|csv")
+	outputFlag := fs.String("output", "", "Output file path")
+	compareFlag := fs.Bool("compare", false, "Compare with previous period")
+	calibratedFlag := fs.Bool("calibrated", false, "Apply latest reconciliation calibration factor")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

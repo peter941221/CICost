@@ -20,12 +20,12 @@ func runBudget(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("budget", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	monthlyFlag := fs.Float64("monthly", 0, "月预算阈值（USD）")
-	weeklyFlag := fs.Float64("weekly", 0, "周预算阈值（USD）")
-	notifyFlag := fs.String("notify", rt.cfg.Budget.Notify, "通知方式 stdout|webhook|file")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	monthlyFlag := fs.Float64("monthly", 0, "Monthly budget threshold (USD)")
+	weeklyFlag := fs.Float64("weekly", 0, "Weekly budget threshold (USD)")
+	notifyFlag := fs.String("notify", rt.cfg.Budget.Notify, "Notification mode: stdout|webhook|file")
 	webhookFlag := fs.String("webhook-url", rt.cfg.Budget.WebhookURL, "Webhook URL")
-	outputFlag := fs.String("output", "", "文件输出路径")
+	outputFlag := fs.String("output", "", "Output file path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

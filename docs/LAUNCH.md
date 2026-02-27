@@ -27,7 +27,7 @@ go run . suggest --repo owner/repo --format yaml --output patches/
    - `git push origin v0.2.0`
 3. Verify install paths:
    - binary download from GitHub Releases
-   - `gh extension install peter941221/CICost`
+   - `gh extension install peter941221/gh-cicost`
    - Homebrew tap formula checksum update
 4. Publish launch message:
    - one short post with problem/solution/demo/install links

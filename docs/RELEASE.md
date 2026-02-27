@@ -21,6 +21,16 @@ Release workflow (`.github/workflows/release.yml`) will run GoReleaser and publi
 - `gh-cicost_<version>_<os>_<arch>.tar.gz|zip`
 - `checksums.txt`
 
+For GitHub CLI extension distribution, mirror `gh-cicost` artifacts to:
+
+- `https://github.com/peter941221/gh-cicost/releases`
+
+and include `gh`-recognized binary names such as:
+
+- `gh-cicost_v0.2.0_windows-amd64.exe`
+- `gh-cicost_v0.2.0_linux-amd64`
+- `gh-cicost_v0.2.0_darwin-arm64`
+
 ## Install Methods
 
 ### Standalone binary
@@ -32,11 +42,11 @@ curl -L https://github.com/peter941221/CICost/releases/latest/download/cicost_<v
 ### GitHub CLI extension
 
 ```bash
-gh extension install peter941221/CICost
+gh extension install peter941221/gh-cicost
 gh cicost version
 ```
 
-`gh cicost` uses the `gh-cicost` release artifacts.
+`gh cicost` installs from `peter941221/gh-cicost` release artifacts.
 
 ### Homebrew
 

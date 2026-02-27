@@ -16,12 +16,12 @@ func runHotspots(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("hotspots", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "时间窗口天数")
-	groupByFlag := fs.String("group-by", "workflow", "维度 workflow|job|runner|branch")
-	topFlag := fs.Int("top", 10, "显示前 N 条")
-	sortFlag := fs.String("sort", "cost", "排序 cost|minutes|fail_rate")
-	formatFlag := fs.String("format", "table", "输出格式 table|md|json")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "Time window in days")
+	groupByFlag := fs.String("group-by", "workflow", "Group by: workflow|job|runner|branch")
+	topFlag := fs.Int("top", 10, "Show top N entries")
+	sortFlag := fs.String("sort", "cost", "Sort by: cost|minutes|fail_rate")
+	formatFlag := fs.String("format", "table", "Output format: table|md|json")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

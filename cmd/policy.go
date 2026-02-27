@@ -42,7 +42,7 @@ func runPolicyHelp() error {
 
 func runPolicyLint(args []string) error {
 	fs := flag.NewFlagSet("policy lint", flag.ContinueOnError)
-	policyPath := fs.String("policy", ".cicost.policy.yml", "策略文件路径")
+	policyPath := fs.String("policy", ".cicost.policy.yml", "Policy file path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -64,9 +64,9 @@ func runPolicyCheck(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("policy check", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "时间窗口天数")
-	policyPath := fs.String("policy", ".cicost.policy.yml", "策略文件路径")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "Time window in days")
+	policyPath := fs.String("policy", ".cicost.policy.yml", "Policy file path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

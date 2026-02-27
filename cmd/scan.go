@@ -22,12 +22,12 @@ func runScan(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("scan", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	daysFlag := fs.Int("days", ctx.cfg.Scan.Days, "时间窗口天数")
-	incrementalFlag := fs.Bool("incremental", ctx.cfg.Scan.Incremental, "启用增量同步")
-	fullFlag := fs.Bool("full", false, "强制全量拉取")
-	workersFlag := fs.Int("workers", ctx.cfg.Scan.Workers, "并发 worker 数")
-	tokenFlag := fs.String("token", "", "GitHub token，可选")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	daysFlag := fs.Int("days", ctx.cfg.Scan.Days, "Time window in days")
+	incrementalFlag := fs.Bool("incremental", ctx.cfg.Scan.Incremental, "Enable incremental sync")
+	fullFlag := fs.Bool("full", false, "Force full sync")
+	workersFlag := fs.Int("workers", ctx.cfg.Scan.Workers, "Concurrent worker count")
+	tokenFlag := fs.String("token", "", "GitHub token (optional)")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}

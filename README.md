@@ -1,15 +1,15 @@
 # CICost
 
-GitHub Actions 成本分析与治理 CLI。
+GitHub Actions cost analysis and governance CLI.
 
-## Status (2026-02-26)
+## Status (2026-02-27)
 
-- [x] Pricing v2：SKU 定价 + `effective_from` 版本快照
-- [x] Reconcile：估算值与实际账单对账 + 校准系数
-- [x] Policy Gate：`policy lint/check/explain` + `error => exit code 3`
-- [x] Suggest：可执行优化建议（`text|yaml` + patch 文件导出）
-- [x] Org Report：多仓聚合，支持 partial result
-- [x] 测试门禁：`go test ./...` / `go test -race ./...` / `go vet ./...`
+- [x] Pricing v2: SKU-based pricing + `effective_from` snapshots
+- [x] Reconcile: estimate vs actual billing with calibration factor
+- [x] Policy Gate: `policy lint/check/explain` + `error => exit code 3`
+- [x] Suggest: actionable optimization output (`text|yaml` + patch export)
+- [x] Org Report: multi-repo aggregation with partial-result support
+- [x] Quality gate: `go test ./...` / `go test -race ./...` / `go vet ./...`
 
 ## Architecture
 
@@ -28,11 +28,11 @@ Commands: scan/report/reconcile/policy/suggest/org-report
 
 ## Quick Start
 
-1. 安装 Go 1.24+（CI 使用 Go 1.26.x 验证）
-2. 认证（任选其一）:
+1. Install Go 1.24+ (CI validated on Go 1.26.x)
+2. Authenticate (one option):
    - `gh auth login`
    - `set GITHUB_TOKEN=ghp_xxx` (Windows)
-3. 执行核心流程:
+3. Run the core flow:
 
 ```bash
 go run . scan --repo owner/repo --days 30
@@ -47,15 +47,15 @@ go run . org-report --repos repos.txt --days 30 --format md
 
 ## Config
 
-- 用户级: `~/.cicost/config.yml`
-- 仓库级: `.cicost.yml`
-- 策略文件: `.cicost.policy.yml`（示例：`.cicost.policy.yml.example`）
-- 定价文件: `configs/pricing_default.yml`（支持 `pricing_snapshots`）
+- User-level: `~/.cicost/config.yml`
+- Repo-level: `.cicost.yml`
+- Policy file: `.cicost.policy.yml` (example: `.cicost.policy.yml.example`)
+- Pricing file: `configs/pricing_default.yml` (supports `pricing_snapshots`)
 
 ## Distribution
 
 - Standalone binary: GitHub Releases artifacts (`cicost_*`)
-- GitHub CLI extension: `gh extension install peter941221/CICost`
+- GitHub CLI extension: `gh extension install peter941221/gh-cicost`
 - Homebrew: `Formula/cicost.rb`
 - Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`
 - Release runbook: `docs/RELEASE.md`
@@ -85,8 +85,8 @@ CICost/
 │   ├── suggest/             # actionable patch suggestions
 │   └── store/               # SQLite schema v2 + access layer
 ├── configs/
-├── 技术文档.MD
-├── 技术文档2.MD
+├── TECHNICAL_SPEC_V1.md
+├── TECHNICAL_SPEC_V2.md
 ├── MEMORY.md
 └── RUNBOOK.md
 ```

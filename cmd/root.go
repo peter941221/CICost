@@ -43,29 +43,29 @@ func Execute(args []string) error {
 }
 
 func runHelp(_ []string) error {
-	fmt.Println(`CICost - GitHub Actions 成本与浪费热区分析 CLI
+	fmt.Println(`CICost - GitHub Actions cost and waste hotspot analysis CLI
 
 Usage:
   cicost <command> [flags]
 
 Commands:
-  init       交互式初始化配置
-  scan       拉取 GitHub Actions 数据并缓存到 SQLite
-  report     生成综合成本报告（table/md/json/csv）
-  reconcile  估算值与实际账单对账并生成校准系数
-  policy     策略门禁（check/lint/explain）
-  suggest    生成可执行优化建议（text/yaml + patch）
-  org-report 多仓聚合报告（md/json，支持 partial result）
-  hotspots   热区排行（workflow/job/runner/branch）
-  budget     预算告警（stdout/webhook/file）
-  explain    生成可执行优化建议
-  config     show/edit 配置
-  version    打印版本信息
-  help       显示帮助信息`)
+  init       Interactive config initialization
+  scan       Fetch GitHub Actions data and cache to SQLite
+  report     Generate cost report (table/md/json/csv)
+  reconcile  Reconcile estimate vs actual billing and persist calibration
+  policy     Policy gate (check/lint/explain)
+  suggest    Generate actionable optimization suggestions (text/yaml + patch)
+  org-report Multi-repo aggregate report (md/json, partial result supported)
+  hotspots   Hotspot ranking (workflow/job/runner/branch)
+  budget     Budget alerting (stdout/webhook/file)
+  explain    Generate optimization suggestions
+  config     show/edit config
+  version    Print version info
+  help       Show help`)
 	return nil
 }
 
-var errNotImplemented = errors.New("not implemented yet; see 技术文档.MD for MVP scope")
+var errNotImplemented = errors.New("not implemented yet; see TECHNICAL_SPEC_V1.md for MVP scope")
 
 type ExitError struct {
 	Code int

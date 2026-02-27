@@ -23,10 +23,10 @@ func runSuggest(args []string) error {
 		return err
 	}
 	fs := flag.NewFlagSet("suggest", flag.ContinueOnError)
-	repoFlag := fs.String("repo", "", "目标仓库，格式 owner/repo")
-	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "时间窗口天数")
-	formatFlag := fs.String("format", "text", "输出格式 text|yaml")
-	outputFlag := fs.String("output", "", "输出路径（目录或文件）")
+	repoFlag := fs.String("repo", "", "Target repository in owner/repo format")
+	daysFlag := fs.Int("days", rt.cfg.Scan.Days, "Time window in days")
+	formatFlag := fs.String("format", "text", "Output format: text|yaml")
+	outputFlag := fs.String("output", "", "Output path (directory or file)")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -120,10 +120,10 @@ func runSuggest(args []string) error {
 		lines = append(lines, fmt.Sprintf("CICost Suggestions for %s", repo))
 		for i, s := range suggestions {
 			lines = append(lines, fmt.Sprintf("%d. [%s] %s", i+1, strings.ToUpper(s.Type), s.Title))
-			lines = append(lines, fmt.Sprintf("   问题: %s", s.Problem))
-			lines = append(lines, fmt.Sprintf("   当前数据: %s", s.CurrentData))
-			lines = append(lines, fmt.Sprintf("   预计收益: $%.2f", s.EstimatedSavingUSD))
-			lines = append(lines, "   修复片段:")
+			lines = append(lines, fmt.Sprintf("   Problem: %s", s.Problem))
+			lines = append(lines, fmt.Sprintf("   Current data: %s", s.CurrentData))
+			lines = append(lines, fmt.Sprintf("   Estimated saving: $%.2f", s.EstimatedSavingUSD))
+			lines = append(lines, "   Patch snippet:")
 			for _, ln := range strings.Split(s.Patch, "\n") {
 				lines = append(lines, "     "+ln)
 			}

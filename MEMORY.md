@@ -6,7 +6,7 @@
 
 - Initialized this directory as an independent Git repository (`main`).
 - Bound remote origin to `https://github.com/peter941221/CICost.git`.
-- Parsed `技术文档.MD` and aligned initial scaffold with the documented structure.
+- Parsed `TECHNICAL_SPEC_V1.md` and aligned initial scaffold with the documented structure.
 - Added first-pass Go CLI skeleton and internal package placeholders.
 - Added baseline project files: `.gitignore`, `Makefile`, `README.md`, `.cicost.yml.example`, `configs/pricing_default.yml`.
 - Created initial commit: `22a1f73 chore: bootstrap cicost repository scaffold`.
@@ -50,7 +50,7 @@
 
 ### Progress
 
-- Added `技术文档2.MD` as post-v0.1.0 strengthening blueprint.
+- Added `TECHNICAL_SPEC_V2.md` as post-v0.1.0 strengthening blueprint.
 - Document includes:
   - competitive positioning summary
   - v2 architecture upgrade
@@ -257,3 +257,28 @@
 - standalone binary run ✅ (`cicost 0.2.0`)
 - `gh extension install peter941221/CICost` ❌ (repo name rule)
 - `gh extension install https://github.com/peter941221/CICost` ❌ (repo name rule)
+
+## 2026-02-27 (Extension Repo + English-Only Sweep)
+
+### Progress
+
+- Created GitHub extension repository: `https://github.com/peter941221/gh-cicost`.
+- Published `v0.2.0` release in `gh-cicost` with extension binaries.
+- Added additional release assets using `gh`-recognized naming (`gh-cicost_v0.2.0_<os>-<arch>[.exe]`) to make installation resolvable.
+- Verified `gh extension install peter941221/gh-cicost` works and `gh cicost version` executes successfully.
+- Completed English-only sweep in CICost:
+  - translated all remaining Chinese CLI flag/help text to English
+  - replaced README with full English version
+  - replaced non-English spec files with `TECHNICAL_SPEC_V1.md` and `TECHNICAL_SPEC_V2.md`
+  - removed non-English filenames from repository
+  - updated docs to use `gh extension install peter941221/gh-cicost`
+
+### Validation
+
+- `go test ./...` ✅
+- `go test -race ./...` ✅
+- `go vet ./...` ✅
+- `go run . help` ✅ (English output verified)
+- `rg -nP "[\\p{Han}]" -S .` ✅ (no matches)
+- `gh extension install peter941221/gh-cicost` ✅
+- `gh cicost version` ✅

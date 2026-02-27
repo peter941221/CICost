@@ -12,7 +12,7 @@ import (
 
 func runInit(args []string) error {
 	fs := flag.NewFlagSet("init", flag.ContinueOnError)
-	yesFlag := fs.Bool("yes", false, "使用默认值，不交互")
+	yesFlag := fs.Bool("yes", false, "Use defaults without interactive prompts")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
