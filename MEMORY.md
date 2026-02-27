@@ -677,3 +677,17 @@
 - `cmd /c "%USERPROFILE%\\go\\bin\\vhs.exe docs\\scripts\\cicost_manual_typing.tape"` ✅
 - `gh release upload v0.2.0 docs/assets/cicost-cli-demo-v6.gif --clobber` ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF v6 Noise-Reduction Push)
+
+### Progress
+
+- Committed cmd-shell based demo cleanup:
+  - commit: `bd004fe`
+  - message: `docs: switch demo recording to cmd and reduce visual noise`
+- Pushed commit to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `661a3e8..bd004fe` ✅
