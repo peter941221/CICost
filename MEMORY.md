@@ -538,3 +538,17 @@
   - old `docs/assets/cicost-cli-demo.gif` removed ✅
 - README reference check (`rg cicost-cli-demo`) ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF Cache-Bust Push)
+
+### Progress
+
+- Committed cache-bust rollout:
+  - commit: `7b05caa`
+  - message: `docs: bust gif cache via v3 asset and update demo reference`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `c42987c..7b05caa` ✅
