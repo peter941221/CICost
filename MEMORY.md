@@ -147,3 +147,81 @@
 - `go test ./...` ✅
 - `go test -race ./...` ✅
 - `go vet ./...` ✅
+
+## 2026-02-27 (Go-to-Market Readiness Assessment)
+
+### Progress
+
+- Performed repository-wide readiness review for promotion/go-to-market.
+- Reviewed product, runbook, release, and changelog docs:
+  - `README.md`
+  - `RUNBOOK.md`
+  - `docs/RELEASE.md`
+  - `CHANGELOG.md`
+- Reviewed CI/CD setup:
+  - `.github/workflows/ci.yml`
+  - `.github/workflows/release.yml`
+  - `.goreleaser.yml`
+- Verified repository state and release/tag signal:
+  - working tree clean
+  - latest tag remains `v0.1.0` while changelog includes `v0.2.0` section
+- Identified documentation consistency gaps:
+  - Go version requirements are inconsistent across files (`README` 1.26+, `RUNBOOK` 1.23+, `go.mod` 1.24.0)
+  - no LICENSE file found at repository root
+
+### Validation
+
+- `go test ./...` ✅
+- `go test -race ./...` ✅
+- `go vet ./...` ✅
+- `go test -cover ./...` ✅ (package-level coverage collected)
+- `go run . help` ✅
+- `goreleaser check` ✅
+
+## 2026-02-27 (License + GTM 48h Plan Start)
+
+### Progress
+
+- Confirmed license direction: Apache-2.0.
+- Added repository root `LICENSE` file using Apache License 2.0 text.
+- Updated README to include explicit license declaration.
+- Prepared 48-hour promotion hardening plan request output with PR slices and validation commands.
+
+### Validation
+
+- `rg -n "Apache License|Version 2.0" LICENSE` ✅
+- `rg -n "^## License|Apache-2.0" README.md` ✅
+- `go test ./...` ✅
+
+## 2026-02-27 (Executed All GTM PR Scopes)
+
+### Progress
+
+- Completed PR1 scope (consistency + legal baseline):
+  - set CLI default version to `0.2.0`
+  - aligned Go version docs to `Go 1.24+` (CI remains `1.26.x`)
+  - updated release doc tag example to `v0.2.0`
+  - added Apache-2.0 `LICENSE`
+- Completed PR2 scope (trust surface docs):
+  - added `SECURITY.md`
+  - added `CONTRIBUTING.md`
+  - added `CODE_OF_CONDUCT.md`
+  - linked trust docs from `README.md`
+- Completed PR3 scope (quality gate hardening):
+  - added `internal/github` tests for client headers, API error parsing, pagination/list mapping, runner inference
+  - added `internal/store` tests for cursor missing/update and v2 persistence behaviors
+  - added dedicated CI `coverage` job in `.github/workflows/ci.yml` with artifact upload
+- Completed PR4 scope (release + launch assets):
+  - added `docs/LAUNCH.md` (positioning/demo/checklist/launch template)
+  - linked launch kit from `README.md`
+
+### Validation
+
+- `go test ./...` ✅
+- `go test -race ./...` ✅
+- `go vet ./...` ✅
+- `go test -cover ./...` ✅
+  - `internal/github`: `79.5%` (previously `8.3%`)
+  - `internal/store`: `32.5%` (previously `13.8%`)
+- `goreleaser check` ✅
+- `go run . version` ✅ (`cicost 0.2.0`)

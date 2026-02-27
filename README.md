@@ -28,7 +28,7 @@ Commands: scan/report/reconcile/policy/suggest/org-report
 
 ## Quick Start
 
-1. 安装 Go 1.26+
+1. 安装 Go 1.24+（CI 使用 Go 1.26.x 验证）
 2. 认证（任选其一）:
    - `gh auth login`
    - `set GITHUB_TOKEN=ghp_xxx` (Windows)
@@ -59,6 +59,17 @@ go run . org-report --repos repos.txt --days 30 --format md
 - Homebrew: `Formula/cicost.rb`
 - Release pipeline: `.github/workflows/release.yml` + `.goreleaser.yml`
 - Release runbook: `docs/RELEASE.md`
+- Launch kit: `docs/LAUNCH.md`
+
+## License
+
+Apache-2.0. See `LICENSE`.
+
+## Community
+
+- Contribution guide: `CONTRIBUTING.md`
+- Code of conduct: `CODE_OF_CONDUCT.md`
+- Security policy: `SECURITY.md`
 
 ## Project Layout
 
