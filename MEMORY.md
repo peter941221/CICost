@@ -751,3 +751,17 @@
 - README reference check (`rg cicost-cli-demo-v8.gif`) ✅
 - subtitle script smoke run with v8 inputs ✅
 - `go test ./...` ✅
+
+## 2026-02-27 (GIF v8 Subtitle Push)
+
+### Progress
+
+- Committed concise subtitle rollout:
+  - commit: `b19ef79`
+  - message: `docs: add v8 concise English subtitle demo gif`
+- Pushed to `origin/main`.
+
+### Validation
+
+- `git push origin main` ✅
+- remote update range: `bcb8d32..b19ef79` ✅
