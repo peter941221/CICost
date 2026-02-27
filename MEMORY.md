@@ -225,3 +225,9 @@
   - `internal/store`: `32.5%` (previously `13.8%`)
 - `goreleaser check` ✅
 - `go run . version` ✅ (`cicost 0.2.0`)
+
+### Release Prep
+
+- Created four PR-style commits for GTM execution scopes.
+- Created local release tag `v0.2.0` on commit `3269de2`.
+- Re-ran `go test ./...` after commits/tag: ✅
